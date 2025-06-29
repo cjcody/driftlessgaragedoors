@@ -220,7 +220,7 @@ function Contact() {
                   <strong>Need help understanding door specifications?</strong>
                 </p>
                 <p className="text-gray-400 text-xs mb-3">
-                  Visit our <Link to="/services" className="text-red-500 hover:text-red-400 transition-colors duration-200 underline">Door Specifications page</Link> for detailed information about insulation ratings, colors, materials, and how to measure your garage door opening.
+                  Visit our <Link to="/specs" className="text-red-500 hover:text-red-400 transition-colors duration-200 underline">Door Specifications page</Link> for detailed information about insulation ratings, colors, materials, and how to measure your garage door opening.
                 </p>
               </div>
 
