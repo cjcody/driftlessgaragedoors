@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
 
@@ -22,12 +23,12 @@ function Home() {
               Professional installation, repair, and maintenance services for residential and commercial properties.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up">
-              <a href="/contact" className="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-none font-bold text-lg transition-colors duration-200 border-2 border-red-600 hover:border-red-700 text-center">
+              <Link to="/contact" className="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-none font-bold text-lg transition-colors duration-200 border-2 border-red-600 hover:border-red-700 text-center">
                 GET FREE QUOTE
-              </a>
-              <a href="/services" className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-black px-8 py-4 rounded-none font-bold text-lg transition-colors duration-200 text-center">
+              </Link>
+              <Link to="/services" className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-black px-8 py-4 rounded-none font-bold text-lg transition-colors duration-200 text-center">
                 VIEW SERVICES
-              </a>
+              </Link>
             </div>
           </div>
         </section>
@@ -82,9 +83,9 @@ function Home() {
             </div>
 
             <div className="text-center">
-              <a href="/services" className="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-none font-bold text-lg transition-colors duration-200 border-2 border-red-600 hover:border-red-700 inline-block">
+              <Link to="/services" className="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-none font-bold text-lg transition-colors duration-200 border-2 border-red-600 hover:border-red-700 inline-block">
                 VIEW ALL SERVICES
-              </a>
+              </Link>
             </div>
           </div>
         </section>

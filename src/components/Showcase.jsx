@@ -16,7 +16,7 @@ function Showcase() {
             </h2>
             <div className="w-24 h-1 bg-red-500 mx-auto mb-4"></div>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Explore our portfolio of completed garage door projects and see the quality craftsmanship we bring to every installation.
+              Explore our portfolio of completed projects.
             </p>
           </div>
           

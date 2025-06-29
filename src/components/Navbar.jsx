@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 
 function Navbar() {
   const [animateGarage, setAnimateGarage] = useState(false);
@@ -28,7 +28,7 @@ function Navbar() {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center relative">
             {/* Logo Image */}
-            <a href="/" className="flex items-center">
+            <Link to="/" className="flex items-center">
               <img 
                 src="/Zeiklogo3.png" 
                 alt="Zeik Logo" 
@@ -42,7 +42,7 @@ function Navbar() {
                   <span className="block text-left">Garage Doors</span>
                 </span>
               </h1>
-            </a>
+            </Link>
             {/* Garage Door Animation - Only on home page */}
             {location.pathname === '/' && !hideGarage && (
               <span className="absolute inset-0 z-10">
@@ -73,21 +73,21 @@ function Navbar() {
           </div>
           <div className="hidden lg:block">
             <div className="ml-10 flex items-baseline space-x-4">
-              <a href="/" className={`px-3 py-2 rounded-md text-md font-medium transition-colors ${isActive('/') ? 'text-red-500' : 'text-white hover:text-red-500'}`}>
+              <Link to="/" className={`px-3 py-2 rounded-md text-md font-medium transition-colors ${isActive('/') ? 'text-red-500' : 'text-white hover:text-red-500'}`}>
                 Home
-              </a>
-              <a href="/services" className={`px-3 py-2 rounded-md text-md font-medium transition-colors ${isActive('/services') ? 'text-red-500' : 'text-white hover:text-red-500'}`}>
+              </Link>
+              <Link to="/services" className={`px-3 py-2 rounded-md text-md font-medium transition-colors ${isActive('/services') ? 'text-red-500' : 'text-white hover:text-red-500'}`}>
                 Services
-              </a>
-              <a href="/specs" className={`px-3 py-2 rounded-md text-md font-medium transition-colors ${isActive('/specs') ? 'text-red-500' : 'text-white hover:text-red-500'}`}>
+              </Link>
+              <Link to="/specs" className={`px-3 py-2 rounded-md text-md font-medium transition-colors ${isActive('/specs') ? 'text-red-500' : 'text-white hover:text-red-500'}`}>
                 Specs
-              </a>
-              <a href="/showcase" className={`px-3 py-2 rounded-md text-md font-medium transition-colors ${isActive('/showcase') ? 'text-red-500' : 'text-white hover:text-red-500'}`}>
+              </Link>
+              <Link to="/showcase" className={`px-3 py-2 rounded-md text-md font-medium transition-colors ${isActive('/showcase') ? 'text-red-500' : 'text-white hover:text-red-500'}`}>
                 Showcase
-              </a>
-              <a href="/contact" className={`px-3 py-2 rounded-md text-md font-medium transition-colors ${isActive('/contact') ? 'text-red-500' : 'text-white hover:text-red-500'}`}>
+              </Link>
+              <Link to="/contact" className={`px-3 py-2 rounded-md text-md font-medium transition-colors ${isActive('/contact') ? 'text-red-500' : 'text-white hover:text-red-500'}`}>
                 Contact
-              </a>
+              </Link>
             </div>
           </div>
           <div className="lg:hidden">
@@ -101,21 +101,21 @@ function Navbar() {
         {/* Mobile Nav Dropdown */}
         {mobileNavOpen && (
           <div className="lg:hidden bg-gray-900 border-t border-gray-800 px-4 py-4 flex flex-col space-y-2 animate-fade-in-down">
-            <a href="/" className={`px-3 py-2 rounded-md text-base font-medium transition-colors ${isActive('/') ? 'text-red-500' : 'text-white hover:text-red-500'}`} onClick={() => setMobileNavOpen(false)}>
+            <Link to="/" className={`px-3 py-2 rounded-md text-base font-medium transition-colors ${isActive('/') ? 'text-red-500' : 'text-white hover:text-red-500'}`} onClick={() => setMobileNavOpen(false)}>
               Home
-            </a>
-            <a href="/services" className={`px-3 py-2 rounded-md text-base font-medium transition-colors ${isActive('/services') ? 'text-red-500' : 'text-white hover:text-red-500'}`} onClick={() => setMobileNavOpen(false)}>
+            </Link>
+            <Link to="/services" className={`px-3 py-2 rounded-md text-base font-medium transition-colors ${isActive('/services') ? 'text-red-500' : 'text-white hover:text-red-500'}`} onClick={() => setMobileNavOpen(false)}>
               Services
-            </a>
-            <a href="/specs" className={`px-3 py-2 rounded-md text-base font-medium transition-colors ${isActive('/specs') ? 'text-red-500' : 'text-white hover:text-red-500'}`} onClick={() => setMobileNavOpen(false)}>
+            </Link>
+            <Link to="/specs" className={`px-3 py-2 rounded-md text-base font-medium transition-colors ${isActive('/specs') ? 'text-red-500' : 'text-white hover:text-red-500'}`} onClick={() => setMobileNavOpen(false)}>
               Specs
-            </a>
-            <a href="/showcase" className={`px-3 py-2 rounded-md text-base font-medium transition-colors ${isActive('/showcase') ? 'text-red-500' : 'text-white hover:text-red-500'}`} onClick={() => setMobileNavOpen(false)}>
+            </Link>
+            <Link to="/showcase" className={`px-3 py-2 rounded-md text-base font-medium transition-colors ${isActive('/showcase') ? 'text-red-500' : 'text-white hover:text-red-500'}`} onClick={() => setMobileNavOpen(false)}>
               Showcase
-            </a>
-            <a href="/contact" className={`px-3 py-2 rounded-md text-base font-medium transition-colors ${isActive('/contact') ? 'text-red-500' : 'text-white hover:text-red-500'}`} onClick={() => setMobileNavOpen(false)}>
+            </Link>
+            <Link to="/contact" className={`px-3 py-2 rounded-md text-base font-medium transition-colors ${isActive('/contact') ? 'text-red-500' : 'text-white hover:text-red-500'}`} onClick={() => setMobileNavOpen(false)}>
               Contact
-            </a>
+            </Link>
           </div>
         )}
       </div>

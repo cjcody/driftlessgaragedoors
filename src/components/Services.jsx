@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
 
@@ -96,9 +97,9 @@ function Services() {
             <p className="text-gray-100 text-base mb-6">
             Contact us today for a free quote on your garage door project. We're here to help with all your garage door needs.
           </p>
-            <a href="/contact" className="bg-white hover:bg-gray-100 text-red-600 px-6 py-3 rounded-none font-bold text-base transition-colors duration-200 border-2 border-white hover:border-gray-100 inline-block">
+            <Link to="/contact" className="bg-white hover:bg-gray-100 text-red-600 px-6 py-3 rounded-none font-bold text-base transition-colors duration-200 border-2 border-white hover:border-gray-100 inline-block">
             GET FREE QUOTE
-          </a>
+          </Link>
           </div>
         </div>
       </section>
