@@ -41,4 +41,26 @@ body {
   background-clip: text;
   color: transparent;
   text-fill-color: transparent;
+}
+
+/* Prevent logo flash during navigation */
+.navbar-logo-container {
+  min-width: 40px;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+}
+
+.navbar-logo {
+  transition: opacity 0.1s ease-in-out;
+  opacity: 1 !important;
+}
+
+.navbar-logo.loading {
+  opacity: 1 !important;
+}
+
+.navbar-logo.loaded {
+  opacity: 1 !important;
 } 

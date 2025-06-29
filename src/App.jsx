@@ -79,9 +79,19 @@ function AppContent() {
 
 function App() {
   useEffect(() => {
-    // Preload the logo image
+    // Preload the logo image globally - this ensures it's cached across all pages
     const logoImage = new Image();
     logoImage.src = '/Zeiklogo3.png';
+    
+    // Also preload other critical images
+    const preloadImages = [
+      '/Zeiklogo3.png'
+    ];
+    
+    preloadImages.forEach(src => {
+      const img = new Image();
+      img.src = src;
+    });
   }, []);
 
   return (

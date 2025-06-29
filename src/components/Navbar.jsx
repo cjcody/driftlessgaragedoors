@@ -29,11 +29,13 @@ function Navbar() {
           <div className="flex items-center relative">
             {/* Logo Image */}
             <Link to="/" className="flex items-center">
-              <img 
-                src="/Zeiklogo3.png" 
-                alt="Zeik Logo" 
-                className="h-10 w-auto mr-4 object-contain"
-              />
+              <div className="navbar-logo-container">
+                <img 
+                  src="/Zeiklogo3.png" 
+                  alt="Zeik Logo" 
+                  className="navbar-logo h-10 w-auto mr-4 object-contain loaded"
+                />
+              </div>
               {/* Company Name - Always Visible */}
               <h1 className="text-2xl font-bold metallic-text relative z-0 text-center md:text-left tracking-wide select-none" style={{ letterSpacing: '2px' }}>
                 <span className="hidden md:inline">Driftless Garage Doors</span>
