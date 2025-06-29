@@ -16,7 +16,7 @@ function DoorSpecifications() {
             </h2>
             <div className="w-24 h-1 bg-red-500 mx-auto mb-4"></div>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Understanding garage door specifications helps you make the best choice for your home. Here's everything you need to know about insulation, materials, colors, and more.
+              Here's everything you need to know about insulation, materials, colors, and more.
             </p>
           </div>
 

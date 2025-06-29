@@ -22,11 +22,6 @@ function Navbar() {
     return location.pathname === path;
   };
 
-  // Preload components on hover
-  const preloadComponent = (componentPath) => {
-    import(componentPath);
-  };
-
   return (
     <nav className="relative bg-gray-900 shadow-lg sticky top-0 z-50 border-b border-gray-800">
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -81,32 +76,16 @@ function Navbar() {
               <a href="/" className={`px-3 py-2 rounded-md text-md font-medium transition-colors ${isActive('/') ? 'text-red-500' : 'text-white hover:text-red-500'}`}>
                 Home
               </a>
-              <a 
-                href="/services" 
-                className={`px-3 py-2 rounded-md text-md font-medium transition-colors ${isActive('/services') ? 'text-red-500' : 'text-white hover:text-red-500'}`}
-                onMouseEnter={() => preloadComponent('../components/Services')}
-              >
+              <a href="/services" className={`px-3 py-2 rounded-md text-md font-medium transition-colors ${isActive('/services') ? 'text-red-500' : 'text-white hover:text-red-500'}`}>
                 Services
               </a>
-              <a 
-                href="/specs" 
-                className={`px-3 py-2 rounded-md text-md font-medium transition-colors ${isActive('/specs') ? 'text-red-500' : 'text-white hover:text-red-500'}`}
-                onMouseEnter={() => preloadComponent('../components/DoorSpecifications')}
-              >
+              <a href="/specs" className={`px-3 py-2 rounded-md text-md font-medium transition-colors ${isActive('/specs') ? 'text-red-500' : 'text-white hover:text-red-500'}`}>
                 Specs
               </a>
-              <a 
-                href="/showcase" 
-                className={`px-3 py-2 rounded-md text-md font-medium transition-colors ${isActive('/showcase') ? 'text-red-500' : 'text-white hover:text-red-500'}`}
-                onMouseEnter={() => preloadComponent('../components/Showcase')}
-              >
+              <a href="/showcase" className={`px-3 py-2 rounded-md text-md font-medium transition-colors ${isActive('/showcase') ? 'text-red-500' : 'text-white hover:text-red-500'}`}>
                 Showcase
               </a>
-              <a 
-                href="/contact" 
-                className={`px-3 py-2 rounded-md text-md font-medium transition-colors ${isActive('/contact') ? 'text-red-500' : 'text-white hover:text-red-500'}`}
-                onMouseEnter={() => preloadComponent('../components/Contact')}
-              >
+              <a href="/contact" className={`px-3 py-2 rounded-md text-md font-medium transition-colors ${isActive('/contact') ? 'text-red-500' : 'text-white hover:text-red-500'}`}>
                 Contact
               </a>
             </div>
@@ -125,36 +104,16 @@ function Navbar() {
             <a href="/" className={`px-3 py-2 rounded-md text-base font-medium transition-colors ${isActive('/') ? 'text-red-500' : 'text-white hover:text-red-500'}`} onClick={() => setMobileNavOpen(false)}>
               Home
             </a>
-            <a 
-              href="/services" 
-              className={`px-3 py-2 rounded-md text-base font-medium transition-colors ${isActive('/services') ? 'text-red-500' : 'text-white hover:text-red-500'}`} 
-              onClick={() => setMobileNavOpen(false)}
-              onMouseEnter={() => preloadComponent('../components/Services')}
-            >
+            <a href="/services" className={`px-3 py-2 rounded-md text-base font-medium transition-colors ${isActive('/services') ? 'text-red-500' : 'text-white hover:text-red-500'}`} onClick={() => setMobileNavOpen(false)}>
               Services
             </a>
-            <a 
-              href="/specs" 
-              className={`px-3 py-2 rounded-md text-base font-medium transition-colors ${isActive('/specs') ? 'text-red-500' : 'text-white hover:text-red-500'}`} 
-              onClick={() => setMobileNavOpen(false)}
-              onMouseEnter={() => preloadComponent('../components/DoorSpecifications')}
-            >
+            <a href="/specs" className={`px-3 py-2 rounded-md text-base font-medium transition-colors ${isActive('/specs') ? 'text-red-500' : 'text-white hover:text-red-500'}`} onClick={() => setMobileNavOpen(false)}>
               Specs
             </a>
-            <a 
-              href="/showcase" 
-              className={`px-3 py-2 rounded-md text-base font-medium transition-colors ${isActive('/showcase') ? 'text-red-500' : 'text-white hover:text-red-500'}`} 
-              onClick={() => setMobileNavOpen(false)}
-              onMouseEnter={() => preloadComponent('../components/Showcase')}
-            >
+            <a href="/showcase" className={`px-3 py-2 rounded-md text-base font-medium transition-colors ${isActive('/showcase') ? 'text-red-500' : 'text-white hover:text-red-500'}`} onClick={() => setMobileNavOpen(false)}>
               Showcase
             </a>
-            <a 
-              href="/contact" 
-              className={`px-3 py-2 rounded-md text-base font-medium transition-colors ${isActive('/contact') ? 'text-red-500' : 'text-white hover:text-red-500'}`} 
-              onClick={() => setMobileNavOpen(false)}
-              onMouseEnter={() => preloadComponent('../components/Contact')}
-            >
+            <a href="/contact" className={`px-3 py-2 rounded-md text-base font-medium transition-colors ${isActive('/contact') ? 'text-red-500' : 'text-white hover:text-red-500'}`} onClick={() => setMobileNavOpen(false)}>
               Contact
             </a>
           </div>

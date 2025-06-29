@@ -91,14 +91,14 @@ function Services() {
         <div className="max-w-4xl mx-auto px-8 text-center">
           <div className="bg-red-600 p-8 rounded-lg mb-8 max-w-2xl mx-auto">
             <h2 className="text-2xl font-bold text-white mb-4">
-              READY TO GET STARTED?
-            </h2>
+            READY TO GET STARTED?
+          </h2>
             <p className="text-gray-100 text-base mb-6">
-              Contact us today for a free quote on your garage door project. We're here to help with all your garage door needs.
-            </p>
+            Contact us today for a free quote on your garage door project. We're here to help with all your garage door needs.
+          </p>
             <a href="/contact" className="bg-white hover:bg-gray-100 text-red-600 px-6 py-3 rounded-none font-bold text-base transition-colors duration-200 border-2 border-white hover:border-gray-100 inline-block">
-              GET FREE QUOTE
-            </a>
+            GET FREE QUOTE
+          </a>
           </div>
         </div>
       </section>

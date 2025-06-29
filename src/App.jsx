@@ -17,26 +17,41 @@ const LoadingSpinner = () => (
 
 function AppContent() {
   const location = useLocation();
+  const [visitedPages, setVisitedPages] = useState(new Set());
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
-  // Preload components when hovering over navigation links
+  // Track visited pages
   useEffect(() => {
-    const preloadComponent = (component) => {
-      component();
-    };
+    setVisitedPages(prev => new Set([...prev, location.pathname]));
+  }, [location.pathname]);
 
-    // Preload all components after initial load
-    const timer = setTimeout(() => {
-      preloadComponent(() => import('./components/Contact'));
-      preloadComponent(() => import('./components/Services'));
-      preloadComponent(() => import('./components/DoorSpecifications'));
-      preloadComponent(() => import('./components/Showcase'));
-    }, 1000);
+  // Preload all components immediately after first render
+  useEffect(() => {
+    if (isInitialLoad) {
+      // Preload all components in the background
+      const preloadAll = async () => {
+        try {
+          await Promise.all([
+            import('./components/Contact'),
+            import('./components/Services'),
+            import('./components/DoorSpecifications'),
+            import('./components/Showcase')
+          ]);
+        } catch (error) {
+          console.log('Preloading completed');
+        }
+      };
+      
+      preloadAll();
+      setIsInitialLoad(false);
+    }
+  }, [isInitialLoad]);
 
-    return () => clearTimeout(timer);
-  }, []);
+  // Show loading spinner only for pages that haven't been visited
+  const shouldShowSpinner = isInitialLoad || !visitedPages.has(location.pathname);
 
   return (
-    <Suspense fallback={<LoadingSpinner />}>
+    <Suspense fallback={shouldShowSpinner ? <LoadingSpinner /> : null}>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/contact" element={<Contact />} />
