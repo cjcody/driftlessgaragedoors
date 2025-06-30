@@ -98,7 +98,7 @@ function Home() {
               <div>
                 <div className="text-center mb-4">
                   <h2 className="text-4xl font-bold mb-4">
-                    <span className="text-white">ABOUT</span> <span className="text-red-500">OUR TEAM</span>
+                    <span className="text-white">ABOUT OUR </span> <span className="text-red-500">TEAM</span>
                 </h2>
                   <div className="w-24 h-1 bg-red-500 mx-auto"></div>
                 </div>

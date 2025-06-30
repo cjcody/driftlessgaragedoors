@@ -1,11 +1,99 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, Link, useNavigate } from 'react-router-dom';
+
+// Global logo state that persists across page navigations
+let globalLogoLoaded = false;
+let globalLogoError = false;
+let globalLogoPromise = null;
 
 function Navbar() {
   const [animateGarage, setAnimateGarage] = useState(false);
   const [hideGarage, setHideGarage] = useState(false);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [logoLoaded, setLogoLoaded] = useState(globalLogoLoaded);
+  const [logoError, setLogoError] = useState(globalLogoError);
   const location = useLocation();
+  const navigate = useNavigate();
+
+  // Handle logo/company name click
+  const handleLogoClick = (e) => {
+    e.preventDefault();
+    
+    if (location.pathname === '/') {
+      // If on homepage, scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      // If on other pages, navigate to home
+      navigate('/');
+    }
+  };
+
+  // Persistent logo loading that only runs once per app session
+  useEffect(() => {
+    // If logo is already loaded globally, use that state
+    if (globalLogoLoaded) {
+      setLogoLoaded(true);
+      return;
+    }
+
+    // If logo has already failed globally, use that state
+    if (globalLogoError) {
+      setLogoError(true);
+      return;
+    }
+
+    // If we already have a loading promise, wait for it
+    if (globalLogoPromise) {
+      globalLogoPromise.then(() => {
+        setLogoLoaded(true);
+      }).catch(() => {
+        setLogoError(true);
+      });
+      return;
+    }
+
+    // Check session storage for persistence across browser sessions
+    if (sessionStorage.getItem('driftless_logo_loaded') === 'true') {
+      globalLogoLoaded = true;
+      setLogoLoaded(true);
+      return;
+    }
+
+    // Load logo with promise-based approach
+    globalLogoPromise = new Promise((resolve, reject) => {
+      const img = new Image();
+      
+      const timeout = setTimeout(() => {
+        globalLogoLoaded = true;
+        globalLogoError = false;
+        sessionStorage.setItem('driftless_logo_loaded', 'true');
+        resolve();
+      }, 300); // Very short timeout for fast fallback
+
+      img.onload = () => {
+        clearTimeout(timeout);
+        globalLogoLoaded = true;
+        globalLogoError = false;
+        sessionStorage.setItem('driftless_logo_loaded', 'true');
+        resolve();
+      };
+
+      img.onerror = () => {
+        clearTimeout(timeout);
+        globalLogoError = true;
+        reject();
+      };
+
+      img.src = '/Zeiklogo3.png';
+    });
+
+    // Handle the promise result
+    globalLogoPromise.then(() => {
+      setLogoLoaded(true);
+    }).catch(() => {
+      setLogoError(true);
+    });
+  }, []); // Only run once on mount, never on location changes
 
   useEffect(() => {
     // Only trigger animation on home page
@@ -27,14 +115,33 @@ function Navbar() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center relative">
-            {/* Logo Image */}
-            <Link to="/" className="flex items-center">
-              <div className="navbar-logo-container">
-                <img 
-                  src="/Zeiklogo3.png" 
-                  alt="Zeik Logo" 
-                  className="navbar-logo h-10 w-auto mr-4 object-contain loaded"
-                />
+            {/* Logo Image - Always maintain dimensions */}
+            <div 
+              className="flex items-center cursor-pointer hover:opacity-80 transition-opacity"
+              onClick={handleLogoClick}
+            >
+              <div className="navbar-logo-container w-10 h-10 mr-4 flex items-center justify-center">
+                {logoLoaded && (
+                  <img 
+                    src="/Zeiklogo3.png" 
+                    alt="Zeik Logo" 
+                    className="navbar-logo h-10 w-auto object-contain"
+                    onLoad={() => console.log('Navbar: Image onLoad event fired')}
+                    onError={() => console.log('Navbar: Image onError event fired')}
+                    // Let browser handle caching naturally
+                    loading="eager"
+                  />
+                )}
+                {!logoLoaded && !logoError && (
+                  <div className="navbar-logo h-10 w-10 bg-gray-700 animate-pulse rounded"></div>
+                )}
+                {logoError && !logoLoaded && (
+                  <div className="navbar-logo h-10 w-10 bg-gray-700 rounded flex items-center justify-center">
+                    <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                )}
               </div>
               {/* Company Name - Always Visible */}
               <h1 className="text-2xl font-bold metallic-text relative z-0 text-center md:text-left tracking-wide select-none" style={{ letterSpacing: '2px' }}>
@@ -44,7 +151,7 @@ function Navbar() {
                   <span className="block text-left">Garage Doors</span>
                 </span>
               </h1>
-            </Link>
+            </div>
             {/* Garage Door Animation - Only on home page */}
             {location.pathname === '/' && !hideGarage && (
               <span className="absolute inset-0 z-10">

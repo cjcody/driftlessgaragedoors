@@ -228,7 +228,7 @@ function DoorSpecifications() {
           {/* Additional Specifications */}
           <div className="mb-16">
             <h3 className="text-2xl font-bold text-white mb-8 text-center">Additional Specifications</h3>
-            <div className="grid lg:grid-cols-2 gap-8">
+            <div className="grid lg:grid-cols-3 gap-8">
               <div className="bg-black border border-gray-800 p-8 hover:border-red-500 transition-colors duration-300">
                 <h4 className="text-xl font-bold text-white mb-4">Window Options</h4>
                 <div className="space-y-3">
@@ -260,37 +260,19 @@ function DoorSpecifications() {
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-
-          {/* Operator Options */}
-          <div className="mb-16">
-            <h3 className="text-2xl font-bold text-white mb-8 text-center">Operator Options</h3>
-            <div className="grid lg:grid-cols-2 gap-8">
-              <div className="bg-black border border-gray-800 p-8 hover:border-red-500 transition-colors duration-300">
-                <h4 className="text-xl font-bold text-white mb-4">New Operator</h4>
-                <p className="text-gray-400 text-sm mb-4">
-                  Complete new garage door opener installation with modern features and technology.
-                </p>
-                <ul className="text-sm text-gray-500 space-y-1">
-                  <li>• Latest technology and features</li>
-                  <li>• Full warranty coverage</li>
-                  <li>• Smart home compatibility</li>
-                  <li>• Professional installation</li>
-                </ul>
-              </div>
 
               <div className="bg-black border border-gray-800 p-8 hover:border-red-500 transition-colors duration-300">
-                <h4 className="text-xl font-bold text-white mb-4">Rehook Existing Operator</h4>
-                <p className="text-gray-400 text-sm mb-4">
-                  Reconnecting your existing garage door opener to the new door system.
-                </p>
-                <ul className="text-sm text-gray-500 space-y-1">
-                  <li>• Cost-effective option</li>
-                  <li>• Maintains existing controls</li>
-                  <li>• Quick installation</li>
-                  <li>• Compatible with most operators</li>
-                </ul>
+                <h4 className="text-xl font-bold text-white mb-4">Operator Options</h4>
+                <div className="space-y-3">
+                  <div>
+                    <h5 className="text-white font-semibold text-sm">New Operator</h5>
+                    <p className="text-gray-400 text-xs">Complete new garage door opener installation with modern features and technology.</p>
+                  </div>
+                  <div>
+                    <h5 className="text-white font-semibold text-sm">Rehook Existing Operator</h5>
+                    <p className="text-gray-400 text-xs">Reconnecting your existing garage door opener to the new door system.</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

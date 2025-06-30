@@ -4,8 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Driftless Garage Doors - Professional Garage Door Services</title>
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="/Zeiklogo3.png" as="image" type="image/png">
+    <link rel="dns-prefetch" href="//localhost">
+    
+    <!-- Cache control meta tags for mobile -->
+    <meta http-equiv="Cache-Control" content="public, max-age=31536000, immutable">
+    
+    <!-- Hidden preload image for immediate loading -->
+    <style>
+        .preload-logo {
+            position: absolute;
+            left: -9999px;
+            top: -9999px;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            pointer-events: none;
+        }
+    </style>
 </head>
 <body>
+    <!-- Hidden preload image -->
+    <img src="/Zeiklogo3.png" alt="" class="preload-logo" loading="eager">
+    
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
 </body>

@@ -43,24 +43,27 @@ body {
   text-fill-color: transparent;
 }
 
-/* Prevent logo flash during navigation */
+/* Simple logo container - just prevent layout shifts */
 .navbar-logo-container {
-  min-width: 40px;
-  min-height: 40px;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
-  background-color: transparent;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .navbar-logo {
-  transition: opacity 0.1s ease-in-out;
-  opacity: 1 !important;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
 }
 
-.navbar-logo.loading {
-  opacity: 1 !important;
-}
-
-.navbar-logo.loaded {
-  opacity: 1 !important;
+/* Mobile-specific loading placeholder */
+@media (max-width: 768px) {
+  .navbar-logo-container {
+    /* Ensure consistent dimensions on mobile */
+    width: 40px !important;
+    height: 40px !important;
+  }
 } 

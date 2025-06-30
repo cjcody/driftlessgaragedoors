@@ -6,6 +6,10 @@ export default defineConfig({
   server: {
     open: true,
     host: '0.0.0.0',
-    port: 5173
+    port: 5173,
+    headers: {
+      // Cache static assets for 1 year
+      'Cache-Control': 'public, max-age=31536000, immutable'
+    }
   }
 }) 

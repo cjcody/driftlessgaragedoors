@@ -79,18 +79,31 @@ function AppContent() {
 
 function App() {
   useEffect(() => {
-    // Preload the logo image globally - this ensures it's cached across all pages
+    // Aggressively preload the logo image globally with multiple strategies
     const logoImage = new Image();
+    logoImage.crossOrigin = 'anonymous';
+    logoImage.loading = 'eager';
+    
+    // Set up logo loading with very short timeout
+    const logoPromise = new Promise((resolve) => {
+      const timeout = setTimeout(resolve, 200); // Very short timeout
+      
+      logoImage.onload = () => {
+        clearTimeout(timeout);
+        resolve();
+      };
+      
+      logoImage.onerror = () => {
+        clearTimeout(timeout);
+        resolve(); // Resolve anyway to not block the app
+      };
+    });
+    
     logoImage.src = '/Zeiklogo3.png';
     
-    // Also preload other critical images
-    const preloadImages = [
-      '/Zeiklogo3.png'
-    ];
-    
-    preloadImages.forEach(src => {
-      const img = new Image();
-      img.src = src;
+    // Wait for logo to load before continuing
+    logoPromise.then(() => {
+      console.log('App: Logo preloaded successfully');
     });
   }, []);
 
