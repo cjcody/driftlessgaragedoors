@@ -26,8 +26,8 @@ function Home() {
               <Link to="/contact" className="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-none font-bold text-lg transition-colors duration-200 border-2 border-red-600 hover:border-red-700 text-center">
                 GET FREE QUOTE
               </Link>
-              <Link to="/services" className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-black px-8 py-4 rounded-none font-bold text-lg transition-colors duration-200 text-center">
-                VIEW SERVICES
+              <Link to="/showcase" className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-black px-8 py-4 rounded-none font-bold text-lg transition-colors duration-200 text-center">
+                VIEW OUR WORK
               </Link>
             </div>
           </div>

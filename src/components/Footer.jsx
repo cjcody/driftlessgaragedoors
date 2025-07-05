@@ -16,7 +16,8 @@ function Footer() {
             <ul className="space-y-2 text-gray-400">
               <li>New Installation</li>
               <li>Repair & Maintenance</li>
-              <li>Commercial Solutions</li>
+              <li>Operator Replacement</li>
+              <li>Residential & Commercial</li>
             </ul>
           </div>
           <div>
