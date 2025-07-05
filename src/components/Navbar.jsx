@@ -28,6 +28,16 @@ function Navbar() {
     }
   };
 
+  // Handle Home link click
+  const handleHomeClick = (e) => {
+    if (location.pathname === '/') {
+      // If already on home page, scroll to top
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    // If on other pages, let the Link component handle navigation normally
+  };
+
   // Persistent logo loading that only runs once per app session
   useEffect(() => {
     // If logo is already loaded globally, use that state
@@ -182,7 +192,7 @@ function Navbar() {
           </div>
           <div className="hidden lg:block">
             <div className="ml-10 flex items-baseline space-x-4">
-              <Link to="/" className={`px-3 py-2 rounded-md text-md font-medium transition-colors ${isActive('/') ? 'text-red-500' : 'text-white hover:text-red-500'}`}>
+              <Link to="/" className={`px-3 py-2 rounded-md text-md font-medium transition-colors ${isActive('/') ? 'text-red-500' : 'text-white hover:text-red-500'}`} onClick={handleHomeClick}>
                 Home
               </Link>
               <Link to="/services" className={`px-3 py-2 rounded-md text-md font-medium transition-colors ${isActive('/services') ? 'text-red-500' : 'text-white hover:text-red-500'}`}>
@@ -210,7 +220,7 @@ function Navbar() {
         {/* Mobile Nav Dropdown */}
         {mobileNavOpen && (
           <div className="lg:hidden bg-gray-900 border-t border-gray-800 px-4 py-4 flex flex-col space-y-2 animate-fade-in-down">
-            <Link to="/" className={`px-3 py-2 rounded-md text-base font-medium transition-colors ${isActive('/') ? 'text-red-500' : 'text-white hover:text-red-500'}`} onClick={() => setMobileNavOpen(false)}>
+            <Link to="/" className={`px-3 py-2 rounded-md text-base font-medium transition-colors ${isActive('/') ? 'text-red-500' : 'text-white hover:text-red-500'}`} onClick={(e) => { handleHomeClick(e); setMobileNavOpen(false); }}>
               Home
             </Link>
             <Link to="/services" className={`px-3 py-2 rounded-md text-base font-medium transition-colors ${isActive('/services') ? 'text-red-500' : 'text-white hover:text-red-500'}`} onClick={() => setMobileNavOpen(false)}>
