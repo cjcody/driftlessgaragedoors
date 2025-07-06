@@ -68,7 +68,7 @@ function Contact() {
       
       // Create the script element for JSONP
       const script = document.createElement('script');
-      const url = new URL('https://script.google.com/macros/s/AKfycbydDxh_b5f97QoAKgpblqOBukWNGcqQb_osloq7ZFv0n44bEXMMtgXpyNm9pVQEbxTh/exec');
+      const url = new URL('https://script.google.com/macros/s/AKfycbwpDXbNAxJWY6LjCMaARIC6f0xWU3je6SiukAPRdz3E7_baDFXAyePEG4LD0eWMQr4s/exec');
       
       // Add the data as URL parameters (excluding honeypot fields)
       const cleanFormData = {
