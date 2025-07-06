@@ -16,151 +16,34 @@ function DoorSpecifications() {
             </h2>
             <div className="w-24 h-1 bg-red-500 mx-auto mb-4"></div>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Here's everything you need to know about insulation, materials, colors, and more.
+              Here's everything you need to know about color options, insulation ratings, and more.
             </p>
-          </div>
-
-          {/* Door Size */}
-          <div className="mb-16">
-            <h3 className="text-2xl font-bold text-white mb-8 text-center">Door Size</h3>
-            <div className="max-w-4xl mx-auto">
-              <div className="bg-black border border-gray-800 p-8 hover:border-red-500 transition-colors duration-300">
-                <h4 className="text-xl font-bold text-white mb-6 text-center">Standard Sizing & Measurement Guide</h4>
-                
-                {/* Standard Sizes */}
-                <div className="grid md:grid-cols-2 gap-8 mb-8">
-                  <div>
-                    <h5 className="text-white font-semibold mb-3 text-center">Standard Door Sizes</h5>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="text-center">
-                        <h6 className="text-white font-semibold text-sm mb-2">Width</h6>
-                        <p className="text-gray-400 text-xs">8', 9', 10', 12', 14', 16', 18'</p>
-                      </div>
-                      <div className="text-center">
-                        <h6 className="text-white font-semibold text-sm mb-2">Height</h6>
-                        <p className="text-gray-400 text-xs">7', 8', 9', 10', 12'</p>
-                      </div>
-                    </div>
-                    <p className="text-gray-400 text-sm text-center mt-4">
-                      Custom sizing available for unique openings
-                    </p>
-                  </div>
-
-                  {/* Measurement Steps */}
-                  <div>
-                    <h5 className="text-white font-semibold mb-3 text-center">How to Measure</h5>
-                    <div className="space-y-3">
-                      <div>
-                        <h6 className="text-white font-semibold text-sm">Step 1: Width</h6>
-                        <p className="text-gray-400 text-xs">Inside edge to inside edge of door frame</p>
-                      </div>
-                      <div>
-                        <h6 className="text-white font-semibold text-sm">Step 2: Height</h6>
-                        <p className="text-gray-400 text-xs">Floor to top of door opening</p>
-                      </div>
-                      <div>
-                        <h6 className="text-white font-semibold text-sm">Step 3: Headroom</h6>
-                        <p className="text-gray-400 text-xs">Top of opening to ceiling/obstructions</p>
-                      </div>
-                      <div>
-                        <h6 className="text-white font-semibold text-sm">Step 4: Sideroom</h6>
-                        <p className="text-gray-400 text-xs">Space on each side (min. 3.5" required)</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Safety Tips */}
-                <div className="p-4 bg-gray-800 border border-gray-700">
-                  <h6 className="text-white font-semibold text-sm mb-3 text-center">⚠️ Safety Tips</h6>
-                  <div className="grid md:grid-cols-2 gap-4 text-xs">
-                    <ul className="text-gray-400 space-y-1">
-                      <li>• Use a sturdy ladder and have someone spot you</li>
-                      <li>• Measure multiple times for accuracy</li>
-                    </ul>
-                    <ul className="text-gray-400 space-y-1">
-                      <li>• Note any obstructions (pipes, electrical, etc.)</li>
-                      <li>• Round down to the nearest standard size</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
 
           {/* Door Colors & Materials */}
           <div className="mb-16">
-            <h3 className="text-2xl font-bold text-white mb-8 text-center">Door Colors & Materials</h3>
-            <div className="grid lg:grid-cols-2 gap-12">
-              {/* Color Options */}
-              <div>
-                <h4 className="text-xl font-bold text-white mb-6">Color Options</h4>
-                <div className="space-y-4">
-                  <div className="bg-black border border-gray-800 p-8 hover:border-red-500 transition-colors duration-300">
-                    <div className="flex items-center mb-3">
-                      <div className="w-8 h-8 bg-white border border-gray-300 mr-3"></div>
-                      <h5 className="text-white font-semibold">Solid Colors</h5>
-                    </div>
-                    <p className="text-gray-400 text-sm">
-                      Wide selection of solid color finishes including white, sandstone, brown, and more. Perfect for matching your home's exterior design.
-                    </p>
-                  </div>
-                  
-                  <div className="bg-black border border-gray-800 p-8 hover:border-red-500 transition-colors duration-300">
-                    <div className="flex items-center mb-3">
-                      <div className="w-8 h-8 bg-amber-800 border border-amber-600 mr-3"></div>
-                      <h5 className="text-white font-semibold">Woodgrain</h5>
-                    </div>
-                    <p className="text-gray-400 text-sm">
-                      Beautiful woodgrain finish that mimics the natural appearance of wood while providing the durability and low maintenance of steel construction.
-                    </p>
-                  </div>
+            <h3 className="text-2xl font-bold text-white mb-8 text-center">Color Options</h3>
+            <div className="grid lg:grid-cols-2 gap-8">
+              {/* Solid Colors */}
+              <div className="bg-black border border-gray-800 p-8 hover:border-red-500 transition-colors duration-300">
+                <div className="flex items-center mb-3">
+                  <div className="w-8 h-8 bg-white border border-gray-300 mr-3"></div>
+                  <h5 className="text-white font-semibold">Solid Colors</h5>
                 </div>
+                <p className="text-gray-400 text-sm">
+                  Wide selection of solid color finishes including white, sandstone, brown, and more. Perfect for matching your home's exterior design.
+                </p>
               </div>
-
-              {/* Material Options */}
-              <div>
-                <h4 className="text-xl font-bold text-white mb-6">Material Options</h4>
-                <div className="space-y-4">
-                  <div className="bg-black border border-gray-800 p-8 hover:border-red-500 transition-colors duration-300">
-                    <h5 className="text-white font-semibold mb-2">Steel</h5>
-                    <p className="text-gray-400 text-sm mb-3">
-                      Most popular material offering durability, low maintenance, and excellent insulation options.
-                    </p>
-                    <ul className="text-sm text-gray-500 space-y-1">
-                      <li>• Durable and long-lasting</li>
-                      <li>• Low maintenance</li>
-                      <li>• Excellent insulation</li>
-                      <li>• Wide color selection</li>
-                    </ul>
-                  </div>
-
-                  <div className="bg-black border border-gray-800 p-8 hover:border-red-500 transition-colors duration-300">
-                    <h5 className="text-white font-semibold mb-2">Aluminum</h5>
-                    <p className="text-gray-400 text-sm mb-3">
-                      Lightweight and corrosion-resistant, perfect for coastal areas or modern designs.
-                    </p>
-                    <ul className="text-sm text-gray-500 space-y-1">
-                      <li>• Corrosion resistant</li>
-                      <li>• Lightweight</li>
-                      <li>• Modern appearance</li>
-                      <li>• Coastal friendly</li>
-                    </ul>
-                  </div>
-
-                  <div className="bg-black border border-gray-800 p-8 hover:border-red-500 transition-colors duration-300">
-                    <h5 className="text-white font-semibold mb-2">Wood</h5>
-                    <p className="text-gray-400 text-sm mb-3">
-                      Premium option offering natural beauty and custom craftsmanship for luxury homes.
-                    </p>
-                    <ul className="text-sm text-gray-500 space-y-1">
-                      <li>• Natural beauty</li>
-                      <li>• Custom designs</li>
-                      <li>• Premium appearance</li>
-                      <li>• Higher maintenance</li>
-                    </ul>
-                  </div>
+              
+              {/* Woodgrain */}
+              <div className="bg-black border border-gray-800 p-8 hover:border-red-500 transition-colors duration-300">
+                <div className="flex items-center mb-3">
+                  <div className="w-8 h-8 bg-amber-800 border border-amber-600 mr-3"></div>
+                  <h5 className="text-white font-semibold">Woodgrain</h5>
                 </div>
+                <p className="text-gray-400 text-sm">
+                  Beautiful woodgrain finish that mimics the natural appearance of wood while providing the durability and low maintenance of steel construction.
+                </p>
               </div>
             </div>
           </div>

@@ -180,7 +180,7 @@ function Contact() {
                     </svg>
                   </div>
                   <div>
-                    <div className="font-semibold text-white">Phone</div>
+                    <div className="font-semibold text-white">Call or Text</div>
                     <div className="text-gray-400">+1 (608) 790-3890</div>
                   </div>
                 </div>
@@ -361,6 +361,7 @@ function Contact() {
                       className="w-full px-4 py-3 bg-gray-700 border border-gray-600 text-white rounded-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                     >
                       <option value="">Select insulation rating</option>
+                      <option value="no-insulation">No Insulation</option>
                       <option value="R-10">R-10</option>
                       <option value="R-13">R-13</option>
                       <option value="R-18">R-18</option>
