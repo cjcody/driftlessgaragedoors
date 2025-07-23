@@ -11,8 +11,8 @@ function Home() {
       {/* Main Content */}
       <div>
         {/* Hero Section */}
-        <section id="home" className="relative h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-black to-gray-900">
-          <div className="absolute inset-0 bg-red-600 opacity-10"></div>
+        <section id="home" className="relative h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat" style={{ backgroundImage: 'url(/garagedoor1.jpg)' }}>
+          <div className="absolute inset-0 bg-black bg-opacity-60"></div>
           <div className="relative text-center z-10 px-6 sm:px-8 w-full">
             <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">
               <span className="text-white">EXPERT</span>
@@ -109,13 +109,14 @@ function Home() {
                 Whether you need a quick preventative maintenance service, spring replacement, or are looking to update the look of your home, we have you covered.
                 </p>
               </div>
-              <div className="bg-gradient-to-br from-red-600 to-red-800 h-96 flex items-center justify-center relative">
-                <div className="absolute inset-0 bg-black opacity-20"></div>
-                <div className="relative text-center text-white">
-                  <svg className="w-24 h-24 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                  <p className="text-xl font-semibold">COMPANY SHOWCASE</p>
+              <div className="relative h-96 overflow-hidden rounded-lg">
+                <img 
+                  src="/driftlessgaragedoorsfamilyphoto.jpg" 
+                  alt="Driftless Garage Doors Family" 
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-30"></div>
+                <div className="absolute bottom-4 left-4 right-4">
                 </div>
               </div>
             </div>

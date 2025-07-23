@@ -66,4 +66,54 @@ body {
     width: 40px !important;
     height: 40px !important;
   }
+}
+
+/* Fix carousel styles affecting logo */
+.navbar-logo {
+  pointer-events: auto !important;
+  width: auto !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: none !important;
+  filter: none !important;
+  transform: none !important;
+  transition: none !important;
+  /* GPU acceleration fix for mobile rendering artifacts */
+  -webkit-transform: translateZ(0) !important;
+  transform: translateZ(0) !important;
+  -webkit-backface-visibility: hidden !important;
+  backface-visibility: hidden !important;
+  -webkit-perspective: 1000px !important;
+  perspective: 1000px !important;
+}
+
+/* Ensure navbar logo container is completely isolated */
+.navbar-logo-container {
+  pointer-events: auto !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: none !important;
+  filter: none !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+/* Ensure carousel only affects carousel images */
+.carousel .slide img {
+  pointer-events: none;
+  width: 100%;
+  display: inline-block;
+}
+
+/* Mobile and tablet hero section - fixed height to prevent viewport jumping */
+@media (max-width: 1024px) {
+  section[id="home"] {
+    height: 600px !important;
+    min-height: 600px !important;
+  }
 } 

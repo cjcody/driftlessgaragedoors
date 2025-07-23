@@ -1,6 +1,8 @@
 import React from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import ImageCarousel from './ImageCarousel';
+import { config } from '../config';
 
 function Showcase() {
   return (
@@ -31,15 +33,9 @@ function Showcase() {
                 Browse through our showcase to see examples of our craftsmanship, attention to detail, and the quality materials we use in every installation.
               </p>
             </div>
-            <div className="bg-gradient-to-br from-red-600 to-red-800 h-96 flex items-center justify-center relative">
-              <div className="absolute inset-0 bg-black opacity-20"></div>
-              <div className="relative text-center text-white">
-                <svg className="w-24 h-24 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-                <p className="text-xl font-semibold">PORTFOLIO COMING SOON</p>
-              </div>
-            </div>
+            <ImageCarousel 
+              csvUrl={config.googleSheetCsvUrl}
+            />
           </div>
         </div>
       </section>
