@@ -198,9 +198,6 @@ function Navbar() {
               <Link to="/services" className={`px-3 py-2 rounded-md text-md font-medium transition-colors ${isActive('/services') ? 'text-red-500' : 'text-white hover:text-red-500'}`}>
                 Services
               </Link>
-              <Link to="/specs" className={`px-3 py-2 rounded-md text-md font-medium transition-colors ${isActive('/specs') ? 'text-red-500' : 'text-white hover:text-red-500'}`}>
-                Specs
-              </Link>
               <Link to="/showcase" className={`px-3 py-2 rounded-md text-md font-medium transition-colors ${isActive('/showcase') ? 'text-red-500' : 'text-white hover:text-red-500'}`}>
                 Showcase
               </Link>
@@ -225,9 +222,6 @@ function Navbar() {
             </Link>
             <Link to="/services" className={`px-3 py-2 rounded-md text-base font-medium transition-colors ${isActive('/services') ? 'text-red-500' : 'text-white hover:text-red-500'}`} onClick={() => setMobileNavOpen(false)}>
               Services
-            </Link>
-            <Link to="/specs" className={`px-3 py-2 rounded-md text-base font-medium transition-colors ${isActive('/specs') ? 'text-red-500' : 'text-white hover:text-red-500'}`} onClick={() => setMobileNavOpen(false)}>
-              Specs
             </Link>
             <Link to="/showcase" className={`px-3 py-2 rounded-md text-base font-medium transition-colors ${isActive('/showcase') ? 'text-red-500' : 'text-white hover:text-red-500'}`} onClick={() => setMobileNavOpen(false)}>
               Showcase

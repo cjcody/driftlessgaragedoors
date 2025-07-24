@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 // Lazy load components for better performance
 const Contact = lazy(() => import('./components/Contact'));
 const Home = lazy(() => import('./components/Home'));
-const DoorSpecifications = lazy(() => import('./components/DoorSpecifications'));
 const Services = lazy(() => import('./components/Services'));
 const Showcase = lazy(() => import('./components/Showcase'));
 
@@ -45,7 +44,6 @@ function AppContent() {
           await Promise.all([
             import('./components/Contact'),
             import('./components/Services'),
-            import('./components/DoorSpecifications'),
             import('./components/Showcase')
           ]);
         } catch (error) {
@@ -69,7 +67,6 @@ function AppContent() {
           <Route path="/" element={<Home />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/services" element={<Services />} />
-          <Route path="/specs" element={<DoorSpecifications />} />
           <Route path="/showcase" element={<Showcase />} />
         </Routes>
       </Suspense>
