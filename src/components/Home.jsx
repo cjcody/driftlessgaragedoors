@@ -5,7 +5,7 @@ import Footer from './Footer';
 
 function Home() {
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-gray-900 text-white">
       <Navbar />
 
       {/* Main Content */}
@@ -36,15 +36,6 @@ function Home() {
         {/* Services Overview */}
         <section id="services" className="py-20 bg-gray-900">
           <div className="max-w-6xl mx-auto px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold mb-4">
-                <span className="text-white">OUR</span> <span className="text-red-500">SERVICES</span>
-              </h2>
-              <div className="w-24 h-1 bg-red-500 mx-auto mb-8"></div>
-              <p className="text-gray-300 text-lg max-w-2xl mx-auto">
-                From new installations to repairs and maintenance, we provide comprehensive garage door solutions for the Driftless Region.
-              </p>
-            </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
               {/* Service Overview 1 */}
@@ -84,7 +75,7 @@ function Home() {
 
             <div className="text-center">
               <Link to="/services" className="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-none font-bold text-lg transition-colors duration-200 border-2 border-red-600 hover:border-red-700 inline-block">
-                VIEW ALL SERVICES
+                LEARN MORE
               </Link>
             </div>
           </div>

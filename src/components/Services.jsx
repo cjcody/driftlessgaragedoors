@@ -4,27 +4,59 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 
 function Services() {
+  // Slideshow images (same as Showcase)
+  const slideshowImages = [
+    '/garagedoor3.jpg',
+    '/garagedoor2.jpg',
+    '/garagedoor4.jpg',
+    '/garagedoor5.jpg',
+  ];
+  const [currentSlide, setCurrentSlide] = React.useState(0);
+
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slideshowImages.length);
+    }, 5000); // 5 seconds per slide
+    return () => clearInterval(interval);
+  }, [slideshowImages.length]);
+
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-gray-900 text-white">
       <Navbar />
 
-      {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-br from-gray-900 via-black to-gray-900">
-        <div className="absolute inset-0 bg-red-600 opacity-10"></div>
-        <div className="relative max-w-6xl mx-auto px-8 text-center z-10">
-          <h1 className="text-4xl font-bold mb-4">
-            <span className="text-white">OUR</span> <span className="text-red-500">SERVICES</span>
-          </h1>
-          <div className="w-24 h-1 bg-red-500 mx-auto mb-4"></div>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
-            Professional garage door solutions for residential and commercial properties in the Driftless Region.
-          </p>
+      {/* Full-bleed Hero Slideshow */}
+      <section className="w-full h-56 md:h-64 relative overflow-hidden">
+        {slideshowImages.map((img, idx) => (
+          <div
+            key={img}
+            className={`absolute inset-0 w-full h-full bg-center bg-cover transition-opacity duration-1000 ${idx === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+            style={{ backgroundImage: `url(${img})` }}
+            aria-hidden={idx !== currentSlide}
+          />
+        ))}
+        {/* Logo overlay on all slides */}
+        <div className="absolute inset-0 flex items-bottom justify-center md:items-center md:justify-center items-end justify-center pointer-events-none z-20">
+          <img
+            src="/slidelogodrift1.png"
+            alt="Driftless Garage Doors Logo"
+            className="max-h-12 md:max-h-24 w-auto drop-shadow-xl"
+            style={{objectFit: 'contain'}}
+          />
         </div>
       </section>
 
       {/* Services Grid */}
       <section className="py-20 bg-gray-900">
         <div className="max-w-6xl mx-auto px-8">
+        <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4">
+              <span className="text-white">OUR</span> <span className="text-red-500">SERVICES</span>
+            </h2>
+            <div className="w-24 h-1 bg-red-500 mx-auto mb-4"></div>
+            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+              Professional garage door solutions for residential and commercial properties in the Driftless Region.
+            </p>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Service Card 1 - New Installs */}
             <div className="bg-black border border-gray-800 p-8 hover:border-red-500 transition-colors duration-300 group">

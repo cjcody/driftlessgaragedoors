@@ -4,6 +4,22 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 
 function Contact() {
+  // Slideshow images (same as Showcase/Services)
+  const slideshowImages = [
+    '/garagedoor3.jpg',
+    '/garagedoor2.jpg',
+    '/garagedoor4.jpg',
+    '/garagedoor5.jpg',
+  ];
+  const [currentSlide, setCurrentSlide] = React.useState(0);
+
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slideshowImages.length);
+    }, 5000); // 5 seconds per slide
+    return () => clearInterval(interval);
+  }, [slideshowImages.length]);
+
   const [formData, setFormData] = useState({
     fullName: '',
     phoneNumber: '',
@@ -152,8 +168,29 @@ function Contact() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-gray-900 text-white">
       <Navbar />
+
+      {/* Full-bleed Hero Slideshow */}
+      <section className="w-full h-56 md:h-64 relative overflow-hidden">
+        {slideshowImages.map((img, idx) => (
+          <div
+            key={img}
+            className={`absolute inset-0 w-full h-full bg-center bg-cover transition-opacity duration-1000 ${idx === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+            style={{ backgroundImage: `url(${img})` }}
+            aria-hidden={idx !== currentSlide}
+          />
+        ))}
+        {/* Logo overlay on all slides */}
+        <div className="absolute inset-0 flex items-bottom justify-center md:items-center md:justify-center items-end justify-center pointer-events-none z-20">
+          <img
+            src="/slidelogodrift1.png"
+            alt="Driftless Garage Doors Logo"
+            className="max-h-12 md:max-h-24 w-auto drop-shadow-xl"
+            style={{objectFit: 'contain'}}
+          />
+        </div>
+      </section>
 
       {/* Contact Section - Full Width */}
       <section className="relative py-20 bg-gray-900">
@@ -213,16 +250,6 @@ function Contact() {
             {/* Contact Form */}
             <div className="lg:col-span-2 bg-black border border-gray-800 p-8 hover:border-red-500 transition-colors duration-300">
               <h3 className="text-2xl font-bold text-white mb-6">REQUEST A QUOTE</h3>
-
-              {/* Guidance Note */}
-              <div className="mb-8 p-4 bg-gray-800 border border-gray-700">
-                <p className="text-gray-300 text-sm mb-2">
-                  <strong>Need help understanding door specifications?</strong>
-                </p>
-                <p className="text-gray-400 text-xs mb-3">
-                  Visit our <Link to="/specs" className="text-red-500 hover:text-red-400 transition-colors duration-200 underline">Door Specifications page</Link> for detailed information about insulation ratings, colors, materials, and how to measure your garage door opening.
-                </p>
-              </div>
 
               <form onSubmit={handleSubmit} className="space-y-8">
                 {/* Honeypot fields - hidden from users but visible to bots */}

@@ -121,7 +121,7 @@ function Navbar() {
   };
 
   return (
-    <nav className="relative bg-gray-900 shadow-lg sticky top-0 z-50 border-b border-gray-800">
+    <nav className="relative bg-gray-900 bg-opacity-60 backdrop-blur shadow-lg sticky top-0 z-50 border-b border-gray-800">
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center relative">
@@ -216,7 +216,7 @@ function Navbar() {
         </div>
         {/* Mobile Nav Dropdown */}
         {mobileNavOpen && (
-          <div className="lg:hidden bg-gray-900 border-t border-gray-800 px-4 py-4 flex flex-col space-y-2 animate-fade-in-down">
+          <div className="lg:hidden bg-gray-900 bg-opacity-60 backdrop-blur border-t border-gray-800 px-4 py-4 flex flex-col space-y-2 animate-fade-in-down">
             <Link to="/" className={`px-3 py-2 rounded-md text-base font-medium transition-colors ${isActive('/') ? 'text-red-500' : 'text-white hover:text-red-500'}`} onClick={(e) => { handleHomeClick(e); setMobileNavOpen(false); }}>
               Home
             </Link>

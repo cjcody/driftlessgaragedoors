@@ -287,7 +287,7 @@ function ImageCarousel({ csvUrl }) {
         showArrows={true}
         showThumbs={false}
         showStatus={false}
-        showIndicators={images.length > 1}
+        showIndicators={false}
         infiniteLoop={true}
         autoPlay={false}
         interval={5000}
