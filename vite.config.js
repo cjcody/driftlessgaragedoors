@@ -38,7 +38,10 @@ export default defineConfig({
         drop_console: true,
         drop_debugger: true
       }
-    }
+    },
+    // Ensure proper file extensions for production
+    outDir: 'dist',
+    assetsDir: 'assets'
   },
   // Optimize dependencies
   optimizeDeps: {
