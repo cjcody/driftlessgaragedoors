@@ -3,7 +3,38 @@ import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 import './style.css';
 
-// Remove loading state once app loads
+// Hero slideshow images that need to be preloaded
+const heroImages = [
+  '/garagedoor3.jpg',
+  '/garagedoor2.jpg', 
+  '/garagedoor4.jpg',
+  '/garagedoor5.jpg',
+  '/slidelogodrift1.png' // Logo overlay
+];
+
+// Preload hero images and wait for them to load
+const preloadHeroImages = async () => {
+  const imagePromises = heroImages.map((src) => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(src);
+      img.onerror = () => {
+        console.warn(`Failed to preload hero image: ${src}`);
+        resolve(src); // Resolve anyway to not block loading
+      };
+      img.src = src;
+    });
+  });
+  
+  try {
+    await Promise.all(imagePromises);
+    console.log('Hero images preloaded successfully');
+  } catch (error) {
+    console.warn('Some hero images failed to preload:', error);
+  }
+};
+
+// Remove loading state once app loads and hero images are ready
 const removeLoadingState = () => {
   document.body.classList.add('app-loaded');
 };
@@ -12,20 +43,23 @@ const removeLoadingState = () => {
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 // Use requestIdleCallback for better performance if available
-const renderApp = () => {
+const renderApp = async () => {
   root.render(
     <React.StrictMode>
       <App />
     </React.StrictMode>
   );
   
-  // Remove loading state after render
-  setTimeout(removeLoadingState, 100);
+  // Wait for hero images to load before removing loading screen
+  await preloadHeroImages();
+  
+  // Remove loading state after hero images are loaded
+  removeLoadingState();
 };
 
 if ('requestIdleCallback' in window) {
-  requestIdleCallback(renderApp);
+  requestIdleCallback(() => renderApp());
 } else {
   // Fallback for browsers that don't support requestIdleCallback
-  setTimeout(renderApp, 0);
+  setTimeout(() => renderApp(), 0);
 } 
