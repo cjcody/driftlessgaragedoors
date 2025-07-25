@@ -5,7 +5,7 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 function ImageCarousel({ csvUrl }) {
   // Check cache immediately to set initial loading state
   const getInitialState = () => {
-    if (!csvUrl) return { images: [], loading: false, error: null, cacheStatus: '' };
+    if (!csvUrl) return { images: [], loading: false, error: null, cacheStatus: '', imagesLoaded: false };
     
     try {
       const CACHE_KEY = `carousel_cache_${btoa(csvUrl)}`;
@@ -18,7 +18,8 @@ function ImageCarousel({ csvUrl }) {
             images: cacheData.images, 
             loading: false, 
             error: null, 
-            cacheStatus: 'Loaded from cache' 
+            cacheStatus: 'Loaded from cache',
+            imagesLoaded: false // Will be set to true after images are preloaded
           };
         }
       }
@@ -26,7 +27,7 @@ function ImageCarousel({ csvUrl }) {
       console.warn('Failed to check initial cache:', err);
     }
     
-    return { images: [], loading: true, error: null, cacheStatus: '' };
+    return { images: [], loading: true, error: null, cacheStatus: '', imagesLoaded: false };
   };
 
   const initialState = getInitialState();
@@ -34,6 +35,7 @@ function ImageCarousel({ csvUrl }) {
   const [loading, setLoading] = useState(initialState.loading);
   const [error, setError] = useState(initialState.error);
   const [cacheStatus, setCacheStatus] = useState(initialState.cacheStatus);
+  const [imagesLoaded, setImagesLoaded] = useState(initialState.imagesLoaded);
 
   // Cache configuration
   const CACHE_KEY = `carousel_cache_${btoa(csvUrl)}`;
@@ -78,15 +80,36 @@ function ImageCarousel({ csvUrl }) {
 
   // Helper function to preload images
   const preloadImages = (imageUrls) => {
+    let loadedCount = 0;
+    const totalImages = imageUrls.length;
+    
+    if (totalImages === 0) {
+      setImagesLoaded(true);
+      return;
+    }
+    
+    // Set a timeout fallback to ensure we don't get stuck loading
+    const timeoutId = setTimeout(() => {
+      setImagesLoaded(true);
+    }, 5000); // 5 second timeout
+    
     imageUrls.forEach((imageData, index) => {
       setTimeout(() => {
         const img = new Image();
-        img.src = imageData.url;
+        img.src = imageData.desktopUrl;
         img.onload = () => {
-          // Image preloaded successfully
+          loadedCount++;
+          if (loadedCount === totalImages) {
+            clearTimeout(timeoutId);
+            setImagesLoaded(true);
+          }
         };
         img.onerror = () => {
-          // Failed to preload image
+          loadedCount++;
+          if (loadedCount === totalImages) {
+            clearTimeout(timeoutId);
+            setImagesLoaded(true);
+          }
         };
       }, index * IMAGE_PRELOAD_DELAY);
     });
@@ -124,6 +147,7 @@ function ImageCarousel({ csvUrl }) {
     try {
       setLoading(true);
       setError(null);
+      setImagesLoaded(false);
       setCacheStatus(useCache ? 'Loading from server...' : 'Refreshing cache...');
       
       // Fetch the CSV from the published Google Sheet
@@ -234,13 +258,15 @@ function ImageCarousel({ csvUrl }) {
     fetchImages(false);
   };
 
-  if (loading) {
+  if (loading || !imagesLoaded) {
     return (
       <div className="bg-gradient-to-br from-red-600 to-red-800 h-96 flex items-center justify-center relative">
         <div className="absolute inset-0 bg-black opacity-20"></div>
         <div className="relative text-center text-white">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
-          <p className="text-xl font-semibold">Loading Images...</p>
+          <p className="text-xl font-semibold">
+            {loading ? 'Loading Images...' : 'Preparing Images...'}
+          </p>
         </div>
       </div>
     );
