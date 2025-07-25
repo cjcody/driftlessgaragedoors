@@ -8,10 +8,10 @@ import { Helmet } from 'react-helmet-async';
 function Showcase() {
   // Slideshow images (replace with your own as needed)
   const slideshowImages = [
-    '/garagedoor3.jpg',
-    '/garagedoor2.jpg',
-    '/garagedoor4.jpg',
-    '/garagedoor5.jpg',
+    '/garagedoor3.webp',
+    '/garagedoor2.webp',
+    '/garagedoor4.webp',
+    '/garagedoor5.webp',
   ];
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -37,14 +37,14 @@ function Showcase() {
         <meta property="og:url" content="https://driftlessgaragedoors.com/showcase" />
         <meta property="og:title" content="Our Work | Garage Door Projects in La Crosse, Trempealeau, Winona & Surrounding Areas" />
         <meta property="og:description" content="See completed garage door installations and repairs by Driftless Garage Doors in La Crosse, Trempealeau, Winona, Holmen, Onalaska, West Salem, Galesville, Centerville, Sparta, Tomah, Arcadia, La Crescent, Melrose, Mindoro and surrounding areas. Quality you can trust!" />
-        <meta property="og:image" content="https://driftlessgaragedoors.com/garagedoor4.jpg" />
+        <meta property="og:image" content="https://driftlessgaragedoors.com/garagedoor4.webp" />
         
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://driftlessgaragedoors.com/showcase" />
         <meta property="twitter:title" content="Our Work | Garage Door Projects in La Crosse, Trempealeau, Winona & Surrounding Areas" />
         <meta property="twitter:description" content="See completed garage door installations and repairs by Driftless Garage Doors in La Crosse, Trempealeau, Winona, Holmen, Onalaska, West Salem, Galesville, Centerville, Sparta, Tomah, Arcadia, La Crescent, Melrose, Mindoro and surrounding areas. Quality you can trust!" />
-        <meta property="twitter:image" content="https://driftlessgaragedoors.com/garagedoor4.jpg" />
+        <meta property="twitter:image" content="https://driftlessgaragedoors.com/garagedoor4.webp" />
         
         <script type="application/ld+json">
           {JSON.stringify({

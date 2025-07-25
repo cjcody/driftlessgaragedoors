@@ -7,10 +7,10 @@ import { Helmet } from 'react-helmet-async';
 function Contact() {
   // Slideshow images (same as Showcase/Services)
   const slideshowImages = [
-    '/garagedoor3.jpg',
-    '/garagedoor2.jpg',
-    '/garagedoor4.jpg',
-    '/garagedoor5.jpg',
+    '/garagedoor3.webp',
+    '/garagedoor2.webp',
+    '/garagedoor4.webp',
+    '/garagedoor5.webp',
   ];
   const [currentSlide, setCurrentSlide] = React.useState(0);
 
@@ -183,14 +183,14 @@ function Contact() {
         <meta property="og:url" content="https://driftlessgaragedoors.com/contact" />
         <meta property="og:title" content="Contact Driftless Garage Doors | Schedule Service in La Crosse, Trempealeau, Winona & Surrounding Areas" />
         <meta property="og:description" content="Get in touch with Driftless Garage Doors for expert garage door services in La Crosse, Trempealeau, Winona, Holmen, Onalaska, West Salem, Galesville, Centerville, Sparta, Tomah, Arcadia, La Crescent, Melrose, Mindoro and surrounding areas. Request a free quote or schedule service today!" />
-        <meta property="og:image" content="https://driftlessgaragedoors.com/garagedoor2.jpg" />
+        <meta property="og:image" content="https://driftlessgaragedoors.com/garagedoor2.webp" />
         
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://driftlessgaragedoors.com/contact" />
         <meta property="twitter:title" content="Contact Driftless Garage Doors | Schedule Service in La Crosse, Trempealeau, Winona & Surrounding Areas" />
         <meta property="twitter:description" content="Get in touch with Driftless Garage Doors for expert garage door services in La Crosse, Trempealeau, Winona, Holmen, Onalaska, West Salem, Galesville, Centerville, Sparta, Tomah, Arcadia, La Crescent, Melrose, Mindoro and surrounding areas. Request a free quote or schedule service today!" />
-        <meta property="twitter:image" content="https://driftlessgaragedoors.com/garagedoor2.jpg" />
+        <meta property="twitter:image" content="https://driftlessgaragedoors.com/garagedoor2.webp" />
         
         <script type="application/ld+json">
           {JSON.stringify({

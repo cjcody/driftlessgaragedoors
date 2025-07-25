@@ -7,10 +7,10 @@ import { Helmet } from 'react-helmet-async';
 function Services() {
   // Slideshow images (same as Showcase)
   const slideshowImages = [
-    '/garagedoor3.jpg',
-    '/garagedoor2.jpg',
-    '/garagedoor4.jpg',
-    '/garagedoor5.jpg',
+    '/garagedoor3.webp',
+    '/garagedoor2.webp',
+    '/garagedoor4.webp',
+    '/garagedoor5.webp',
   ];
   const [currentSlide, setCurrentSlide] = React.useState(0);
 
@@ -36,14 +36,14 @@ function Services() {
         <meta property="og:url" content="https://driftlessgaragedoors.com/services" />
         <meta property="og:title" content="Full-Service Garage Door Company | Repairs, Installation & Maintenance" />
         <meta property="og:description" content="Comprehensive garage door services including installation, repairs, and maintenance for residential and commercial clients in La Crosse, Trempealeau, Winona, Holmen, Onalaska, West Salem, Galesville, Centerville, Sparta, Tomah, Arcadia, La Crescent, Melrose, Mindoro and surrounding areas." />
-        <meta property="og:image" content="https://driftlessgaragedoors.com/garagedoor3.jpg" />
+        <meta property="og:image" content="https://driftlessgaragedoors.com/garagedoor3.webp" />
         
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://driftlessgaragedoors.com/services" />
         <meta property="twitter:title" content="Full-Service Garage Door Company | Repairs, Installation & Maintenance" />
         <meta property="twitter:description" content="Comprehensive garage door services including installation, repairs, and maintenance for residential and commercial clients in La Crosse, Trempealeau, Winona, Holmen, Onalaska, West Salem, Galesville, Centerville, Sparta, Tomah, Arcadia, La Crescent, Melrose, Mindoro and surrounding areas." />
-        <meta property="twitter:image" content="https://driftlessgaragedoors.com/garagedoor3.jpg" />
+        <meta property="twitter:image" content="https://driftlessgaragedoors.com/garagedoor3.webp" />
         
         <script type="application/ld+json">
           {JSON.stringify({

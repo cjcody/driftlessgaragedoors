@@ -5,10 +5,10 @@ import './style.css';
 
 // Hero slideshow images that need to be preloaded
 const heroImages = [
-  '/garagedoor3.jpg',
-  '/garagedoor2.jpg', 
-  '/garagedoor4.jpg',
-  '/garagedoor5.jpg',
+  '/garagedoor3.webp',
+  '/garagedoor2.webp', 
+  '/garagedoor4.webp',
+  '/garagedoor5.webp',
   '/slidelogodrift1.png' // Logo overlay
 ];
 

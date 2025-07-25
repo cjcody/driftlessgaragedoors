@@ -290,6 +290,7 @@ function Home() {
                       src="/garagedoorfamily.webp" 
                       alt="Driftless Garage Doors Family" 
                       className="w-full h-full object-cover"
+                      loading="lazy"
                     />
                   </picture>
                 </div>
