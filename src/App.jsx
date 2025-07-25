@@ -12,33 +12,41 @@ const Showcase = lazy(() => import('./components/Showcase'));
 const PrivacyPolicy = lazy(() => import('./components/PrivacyPolicy'));
 const NotFound = lazy(() => import('./components/NotFound'));
 
-// Background preloader for instant navigation
+// Background preloader for instant navigation from any page
 const BackgroundPreloader = () => {
+  const { pathname } = useLocation();
+  
   useEffect(() => {
     // Preload other routes in the background after initial render
     const preloadRoutes = async () => {
       // Wait for initial page to be fully rendered
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // Preload routes in parallel
-      const preloadPromises = [
-        import('./components/Contact'),
-        import('./components/Services'),
-        import('./components/Showcase'),
-        import('./components/PrivacyPolicy'),
-        import('./components/NotFound')
+      // Define all routes that can be preloaded
+      const allRoutes = [
+        { path: '/', component: () => import('./components/Home') },
+        { path: '/contact', component: () => import('./components/Contact') },
+        { path: '/services', component: () => import('./components/Services') },
+        { path: '/showcase', component: () => import('./components/Showcase') },
+        { path: '/privacy-policy', component: () => import('./components/PrivacyPolicy') }
       ];
+      
+      // Filter out the current page and preload the rest
+      const routesToPreload = allRoutes.filter(route => route.path !== pathname);
+      
+      // Preload routes in parallel
+      const preloadPromises = routesToPreload.map(route => route.component());
       
       try {
         await Promise.all(preloadPromises);
-        console.log('Routes preloaded for instant navigation');
+        console.log(`Routes preloaded for instant navigation from ${pathname}`);
       } catch (error) {
         console.log('Background preloading completed');
       }
     };
     
     preloadRoutes();
-  }, []);
+  }, [pathname]);
   
   return null;
 };
