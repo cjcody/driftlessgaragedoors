@@ -3,6 +3,7 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import ImageCarousel from './ImageCarousel';
 import { config } from '../config';
+import { Helmet } from 'react-helmet-async';
 
 function Showcase() {
   // Slideshow images (replace with your own as needed)
@@ -23,6 +24,113 @@ function Showcase() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
+      <Helmet>
+        <title>Our Work | Garage Door Projects in La Crosse, Trempealeau, Winona & Surrounding Areas</title>
+        <meta name="description" content="See completed garage door installations and repairs by Driftless Garage Doors in La Crosse, Trempealeau, Winona, Holmen, Onalaska, West Salem, Galesville, Centerville, Sparta, Tomah, Arcadia, La Crescent, Melrose, Mindoro and surrounding areas. Quality you can trust!" />
+        <meta name="keywords" content="garage door projects, garage door installation examples, garage door repair work, La Crosse garage door projects, Trempealeau garage door work, Winona garage door installations, garage door showcase, completed garage door work" />
+        <meta name="author" content="Driftless Garage Doors" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://driftlessgaragedoors.com/showcase" />
+        
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://driftlessgaragedoors.com/showcase" />
+        <meta property="og:title" content="Our Work | Garage Door Projects in La Crosse, Trempealeau, Winona & Surrounding Areas" />
+        <meta property="og:description" content="See completed garage door installations and repairs by Driftless Garage Doors in La Crosse, Trempealeau, Winona, Holmen, Onalaska, West Salem, Galesville, Centerville, Sparta, Tomah, Arcadia, La Crescent, Melrose, Mindoro and surrounding areas. Quality you can trust!" />
+        <meta property="og:image" content="https://driftlessgaragedoors.com/garagedoor4.jpg" />
+        
+        {/* Twitter */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://driftlessgaragedoors.com/showcase" />
+        <meta property="twitter:title" content="Our Work | Garage Door Projects in La Crosse, Trempealeau, Winona & Surrounding Areas" />
+        <meta property="twitter:description" content="See completed garage door installations and repairs by Driftless Garage Doors in La Crosse, Trempealeau, Winona, Holmen, Onalaska, West Salem, Galesville, Centerville, Sparta, Tomah, Arcadia, La Crescent, Melrose, Mindoro and surrounding areas. Quality you can trust!" />
+        <meta property="twitter:image" content="https://driftlessgaragedoors.com/garagedoor4.jpg" />
+        
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Our Work | Garage Door Projects",
+            "description": "See completed garage door installations and repairs by Driftless Garage Doors",
+            "mainEntity": {
+              "@type": "LocalBusiness",
+              "name": "Driftless Garage Doors",
+              "telephone": "+1-608-790-3890",
+              "email": "driftlessgaragedoors@gmail.com",
+              "address": {
+                "@type": "PostalAddress",
+                "addressRegion": "WI",
+                "addressCountry": "US"
+              },
+              "areaServed": [
+                {
+                  "@type": "City",
+                  "name": "La Crosse"
+                },
+                {
+                  "@type": "City",
+                  "name": "Trempealeau"
+                },
+                {
+                  "@type": "City",
+                  "name": "Winona"
+                },
+                {
+                  "@type": "City", 
+                  "name": "Holmen"
+                },
+                {
+                  "@type": "City",
+                  "name": "Onalaska"
+                },
+                {
+                  "@type": "City",
+                  "name": "West Salem"
+                },
+                {
+                  "@type": "City",
+                  "name": "Galesville"
+                },
+                {
+                  "@type": "City",
+                  "name": "Centerville"
+                },
+                {
+                  "@type": "City",
+                  "name": "Sparta"
+                },
+                {
+                  "@type": "City",
+                  "name": "Tomah"
+                },
+                {
+                  "@type": "City",
+                  "name": "Arcadia"
+                },
+                {
+                  "@type": "City",
+                  "name": "La Crescent"
+                },
+                {
+                  "@type": "City",
+                  "name": "Melrose"
+                },
+                {
+                  "@type": "City",
+                  "name": "Mindoro"
+                }
+              ],
+              "serviceType": [
+                "Garage Door Installation",
+                "Garage Door Repair",
+                "Spring Replacement",
+                "Operator Installation",
+                "Emergency Garage Door Repair"
+              ]
+            }
+          })}
+        </script>
+      </Helmet>
       <Navbar />
 
       {/* Full-bleed Hero Slideshow */}

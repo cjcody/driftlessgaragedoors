@@ -7,9 +7,12 @@ function Footer() {
         <div className="grid md:grid-cols-3 gap-8">
           <div>
             <h3 className="text-xl font-bold mb-4 text-red-500">DRIFTLESS GARAGE DOORS</h3>
-            <p className="text-gray-400">
-              Professional garage door services for residential and commercial properties in the Driftless region.
+            <p className="text-gray-400 mb-4">
+              Professional garage door services for residential and commercial properties in Driftless Region.
             </p>
+            <div className="text-sm text-gray-500">
+              <p><strong>Service Areas:</strong> La Crosse, Trempealeau, Winona, & surrounding areas</p>
+            </div>
           </div>
           <div>
             <h4 className="text-lg font-semibold mb-4 text-white">Services</h4>
@@ -23,9 +26,8 @@ function Footer() {
           <div>
             <h4 className="text-lg font-semibold mb-4 text-white">Contact</h4>
             <div className="space-y-2 text-gray-400">
-              <p>+1 (608) 790-3890</p>
-              <p>driftlessgaragedoors@gmail.com</p>
-              <p>Driftless Region, WI</p>
+              <p><strong>+1 (608) 790-3890</strong></p>
+              <p><strong>driftlessgaragedoors@gmail.com</strong></p>
               <div className="pt-2">
                 <a 
                   href="https://www.facebook.com/DriftlessGarageDoors/" 
@@ -56,6 +58,9 @@ function Footer() {
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
           <p>&copy; 2025 Driftless Garage Doors, LLC. All rights reserved.</p>
           <p className="mt-2 text-sm">Website designed by <a href="https://www.codyjwebstudio.com/" target="_blank" rel="noopener noreferrer" className="text-red-500 hover:text-red-400 transition-colors duration-200">Cody J Web Studio</a></p>
+          <p className="mt-2 text-sm">
+            <a href="/privacy-policy" className="text-gray-400 hover:text-red-500 transition-colors duration-200">Privacy Policy</a>
+          </p>
         </div>
       </div>
     </footer>

@@ -83,10 +83,10 @@ function ImageCarousel({ csvUrl }) {
         const img = new Image();
         img.src = imageData.url;
         img.onload = () => {
-          console.log(`Preloaded image ${index + 1}: ${imageData.url}`);
+          // Image preloaded successfully
         };
         img.onerror = () => {
-          console.warn(`Failed to preload image ${index + 1}: ${imageData.url}`);
+          // Failed to preload image
         };
       }, index * IMAGE_PRELOAD_DELAY);
     });

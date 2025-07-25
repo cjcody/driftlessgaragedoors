@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import { Helmet } from 'react-helmet-async';
 
 function Services() {
   // Slideshow images (same as Showcase)
@@ -21,7 +22,136 @@ function Services() {
   }, [slideshowImages.length]);
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <>
+      <Helmet>
+        <title>Full-Service Garage Door Company | Repairs, Installation & Maintenance</title>
+        <meta name="description" content="Comprehensive garage door services including installation, repairs, and maintenance for residential and commercial clients in La Crosse, Trempealeau, Winona, Holmen, Onalaska, West Salem, Galesville, Centerville, Sparta, Tomah, Arcadia, La Crescent, Melrose, Mindoro and surrounding areas." />
+        <meta name="keywords" content="garage door installation, garage door repair, garage door maintenance, spring replacement, garage door opener, residential garage doors, commercial garage doors, La Crosse garage doors, Trempealeau garage doors, Winona garage doors" />
+        <meta name="author" content="Driftless Garage Doors" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://driftlessgaragedoors.com/services" />
+        
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://driftlessgaragedoors.com/services" />
+        <meta property="og:title" content="Full-Service Garage Door Company | Repairs, Installation & Maintenance" />
+        <meta property="og:description" content="Comprehensive garage door services including installation, repairs, and maintenance for residential and commercial clients in La Crosse, Trempealeau, Winona, Holmen, Onalaska, West Salem, Galesville, Centerville, Sparta, Tomah, Arcadia, La Crescent, Melrose, Mindoro and surrounding areas." />
+        <meta property="og:image" content="https://driftlessgaragedoors.com/garagedoor3.jpg" />
+        
+        {/* Twitter */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://driftlessgaragedoors.com/services" />
+        <meta property="twitter:title" content="Full-Service Garage Door Company | Repairs, Installation & Maintenance" />
+        <meta property="twitter:description" content="Comprehensive garage door services including installation, repairs, and maintenance for residential and commercial clients in La Crosse, Trempealeau, Winona, Holmen, Onalaska, West Salem, Galesville, Centerville, Sparta, Tomah, Arcadia, La Crescent, Melrose, Mindoro and surrounding areas." />
+        <meta property="twitter:image" content="https://driftlessgaragedoors.com/garagedoor3.jpg" />
+        
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Service",
+            "name": "Garage Door Services",
+            "description": "Comprehensive garage door installation, repair, and maintenance services",
+            "provider": {
+              "@type": "LocalBusiness",
+              "name": "Driftless Garage Doors",
+              "telephone": "+1-608-790-3890",
+              "email": "driftlessgaragedoors@gmail.com"
+            },
+            "areaServed": [
+              {
+                "@type": "City",
+                "name": "La Crosse"
+              },
+              {
+                "@type": "City",
+                "name": "Trempealeau"
+              },
+              {
+                "@type": "City",
+                "name": "Winona"
+              },
+              {
+                "@type": "City", 
+                "name": "Holmen"
+              },
+              {
+                "@type": "City",
+                "name": "Onalaska"
+              },
+              {
+                "@type": "City",
+                "name": "West Salem"
+              },
+              {
+                "@type": "City",
+                "name": "Galesville"
+              },
+              {
+                "@type": "City",
+                "name": "Centerville"
+              },
+              {
+                "@type": "City",
+                "name": "Sparta"
+              },
+              {
+                "@type": "City",
+                "name": "Tomah"
+              },
+              {
+                "@type": "City",
+                "name": "Arcadia"
+              },
+              {
+                "@type": "City",
+                "name": "La Crescent"
+              },
+              {
+                "@type": "City",
+                "name": "Melrose"
+              },
+              {
+                "@type": "City",
+                "name": "Mindoro"
+              }
+            ],
+            "hasOfferCatalog": {
+              "@type": "OfferCatalog",
+              "name": "Garage Door Services",
+              "itemListElement": [
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Garage Door Installation"
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Garage Door Repair"
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Spring Replacement"
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Operator Installation"
+                  }
+                }
+              ]
+            }
+          })}
+        </script>
+      </Helmet>
       <Navbar />
 
       {/* Full-bleed Hero Slideshow */}
@@ -137,7 +267,7 @@ function Services() {
       </section>
 
       <Footer />
-    </div>
+    </>
   );
 }
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import { Helmet } from 'react-helmet-async';
 
 function Contact() {
   // Slideshow images (same as Showcase/Services)
@@ -54,7 +55,7 @@ function Contact() {
     
     // Honeypot validation - if honeypot fields are filled, it's likely spam
     if (formData.website || formData.company) {
-      console.log('Potential spam detected - honeypot fields filled');
+      // Potential spam detected - honeypot fields filled
       setSubmitStatus('success'); // Show success to spammer but don't actually submit
       setFormData({
         fullName: '',
@@ -168,7 +169,153 @@ function Contact() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <>
+      <Helmet>
+        <title>Contact Driftless Garage Doors | Schedule Service in La Crosse, Trempealeau, Winona & Surrounding Areas</title>
+        <meta name="description" content="Get in touch with Driftless Garage Doors for expert garage door services in La Crosse, Trempealeau, Winona, Holmen, Onalaska, West Salem, Galesville, Centerville, Sparta, Tomah, Arcadia, La Crescent, Melrose, Mindoro and surrounding areas. Request a free quote or schedule service today!" />
+        <meta name="keywords" content="contact garage door company, garage door quote, schedule garage door service, La Crosse garage door contact, Trempealeau garage door quote, Winona garage door service, free garage door estimate" />
+        <meta name="author" content="Driftless Garage Doors" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://driftlessgaragedoors.com/contact" />
+        
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://driftlessgaragedoors.com/contact" />
+        <meta property="og:title" content="Contact Driftless Garage Doors | Schedule Service in La Crosse, Trempealeau, Winona & Surrounding Areas" />
+        <meta property="og:description" content="Get in touch with Driftless Garage Doors for expert garage door services in La Crosse, Trempealeau, Winona, Holmen, Onalaska, West Salem, Galesville, Centerville, Sparta, Tomah, Arcadia, La Crescent, Melrose, Mindoro and surrounding areas. Request a free quote or schedule service today!" />
+        <meta property="og:image" content="https://driftlessgaragedoors.com/garagedoor2.jpg" />
+        
+        {/* Twitter */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://driftlessgaragedoors.com/contact" />
+        <meta property="twitter:title" content="Contact Driftless Garage Doors | Schedule Service in La Crosse, Trempealeau, Winona & Surrounding Areas" />
+        <meta property="twitter:description" content="Get in touch with Driftless Garage Doors for expert garage door services in La Crosse, Trempealeau, Winona, Holmen, Onalaska, West Salem, Galesville, Centerville, Sparta, Tomah, Arcadia, La Crescent, Melrose, Mindoro and surrounding areas. Request a free quote or schedule service today!" />
+        <meta property="twitter:image" content="https://driftlessgaragedoors.com/garagedoor2.jpg" />
+        
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ContactPage",
+            "name": "Contact Driftless Garage Doors",
+            "description": "Contact page for Driftless Garage Doors garage door services",
+            "mainEntity": {
+              "@type": "LocalBusiness",
+              "name": "Driftless Garage Doors",
+              "telephone": "+1-608-790-3890",
+              "email": "driftlessgaragedoors@gmail.com",
+              "url": "https://driftlessgaragedoors.com",
+              "address": {
+                "@type": "PostalAddress",
+                "addressRegion": "WI",
+                "addressCountry": "US"
+              },
+              "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": "43.8014",
+                "longitude": "-91.2396"
+              },
+              "openingHours": "Mo-Fr 08:00-18:00,Sa 09:00-15:00",
+              "priceRange": "$$",
+              "paymentAccepted": ["Cash", "Check", "Credit Card"],
+              "currenciesAccepted": "USD",
+              "areaServed": [
+                {
+                  "@type": "City",
+                  "name": "La Crosse",
+                  "sameAs": "https://en.wikipedia.org/wiki/La_Crosse,_Wisconsin"
+                },
+                {
+                  "@type": "City",
+                  "name": "Trempealeau",
+                  "sameAs": "https://en.wikipedia.org/wiki/Trempealeau,_Wisconsin"
+                },
+                {
+                  "@type": "City",
+                  "name": "Winona",
+                  "sameAs": "https://en.wikipedia.org/wiki/Winona,_Minnesota"
+                },
+                {
+                  "@type": "City", 
+                  "name": "Holmen",
+                  "sameAs": "https://en.wikipedia.org/wiki/Holmen,_Wisconsin"
+                },
+                {
+                  "@type": "City",
+                  "name": "Onalaska",
+                  "sameAs": "https://en.wikipedia.org/wiki/Onalaska,_Wisconsin"
+                },
+                {
+                  "@type": "City",
+                  "name": "West Salem",
+                  "sameAs": "https://en.wikipedia.org/wiki/West_Salem,_Wisconsin"
+                },
+                {
+                  "@type": "City",
+                  "name": "Galesville",
+                  "sameAs": "https://en.wikipedia.org/wiki/Galesville,_Wisconsin"
+                },
+                {
+                  "@type": "City",
+                  "name": "Centerville",
+                  "sameAs": "https://en.wikipedia.org/wiki/Centerville,_Wisconsin"
+                },
+                {
+                  "@type": "City",
+                  "name": "Sparta",
+                  "sameAs": "https://en.wikipedia.org/wiki/Sparta,_Wisconsin"
+                },
+                {
+                  "@type": "City",
+                  "name": "Tomah",
+                  "sameAs": "https://en.wikipedia.org/wiki/Tomah,_Wisconsin"
+                },
+                {
+                  "@type": "City",
+                  "name": "Arcadia",
+                  "sameAs": "https://en.wikipedia.org/wiki/Arcadia,_Wisconsin"
+                },
+                {
+                  "@type": "City",
+                  "name": "La Crescent",
+                  "sameAs": "https://en.wikipedia.org/wiki/La_Crescent,_Minnesota"
+                },
+                {
+                  "@type": "City",
+                  "name": "Melrose",
+                  "sameAs": "https://en.wikipedia.org/wiki/Melrose,_Wisconsin"
+                },
+                {
+                  "@type": "City",
+                  "name": "Mindoro",
+                  "sameAs": "https://en.wikipedia.org/wiki/Mindoro,_Wisconsin"
+                }
+              ],
+              "serviceType": [
+                "Garage Door Installation",
+                "Garage Door Repair",
+                "Spring Replacement",
+                "Operator Installation",
+                "Emergency Garage Door Repair"
+              ],
+              "sameAs": [
+                "https://www.facebook.com/DriftlessGarageDoors/",
+                "https://www.instagram.com/driftlessgaragedoors"
+              ]
+            },
+            "potentialAction": {
+              "@type": "ContactAction",
+              "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "https://driftlessgaragedoors.com/contact",
+                "inLanguage": "en-US"
+              },
+              "result": {
+                "@type": "ContactPage"
+              }
+            }
+          })}
+        </script>
+      </Helmet>
       <Navbar />
 
       {/* Full-bleed Hero Slideshow */}
@@ -201,7 +348,7 @@ function Contact() {
             </h2>
             <div className="w-24 h-1 bg-red-500 mx-auto mb-4"></div>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Ready to get started? Contact us for a free consultation and quote on your garage door project.
+              Ready to get started? Contact us for a free consultation and quote on your project
             </p>
           </div>
           
@@ -221,27 +368,27 @@ function Contact() {
                     <div className="text-gray-400">+1 (608) 790-3890</div>
                   </div>
                 </div>
-                <div className="flex items-center">
-                  <div className="w-12 h-12 bg-red-600 flex items-center justify-center mr-4">
+                <div className="flex items-start">
+                  <div className="w-12 h-12 bg-red-600 flex items-center justify-center mr-4 flex-shrink-0">
                     <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
                   </div>
-                  <div>
+                  <div className="flex-1">
                     <div className="font-semibold text-white">Email</div>
                     <div className="text-gray-400">driftlessgaragedoors@gmail.com</div>
                   </div>
                 </div>
-                <div className="flex items-center">
-                  <div className="w-12 h-12 bg-red-600 flex items-center justify-center mr-4">
+                <div className="flex items-start">
+                  <div className="w-12 h-12 bg-red-600 flex items-center justify-center mr-4 flex-shrink-0">
                     <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
                   </div>
-                  <div>
+                  <div className="flex-1">
                     <div className="font-semibold text-white">Service Area</div>
-                    <div className="text-gray-400">Driftless Region, WI</div>
+                    <div className="text-gray-400">La Crosse, Trempealeau, Winona & surrounding areas</div>
                   </div>
                 </div>
               </div>
@@ -491,7 +638,7 @@ function Contact() {
       </section>
 
       <Footer />
-    </div>
+    </>
   );
 }
 

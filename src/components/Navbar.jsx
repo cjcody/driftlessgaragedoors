@@ -136,8 +136,8 @@ function Navbar() {
                     src="/Zeiklogo3.png" 
                     alt="Zeik Logo" 
                     className="navbar-logo h-10 w-auto object-contain"
-                    onLoad={() => console.log('Navbar: Image onLoad event fired')}
-                    onError={() => console.log('Navbar: Image onError event fired')}
+                                onLoad={() => {}}
+            onError={() => {}}
                     // Let browser handle caching naturally
                     loading="eager"
                   />

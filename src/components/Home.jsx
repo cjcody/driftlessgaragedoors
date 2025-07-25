@@ -2,11 +2,186 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import { Helmet } from 'react-helmet-async';
 
 function Home() {
   return (
     <>
-      <img src="/garagedoor1.jpg" alt="preload hero" style={{display:'none'}} />
+      <Helmet>
+        <title>Garage Door Installation & Repair in La Crosse, Trempealeau, Winona & Surrounding Areas | Driftless Garage Doors</title>
+        <meta name="description" content="Professional garage door installation, repair, and maintenance for homes and businesses in La Crosse, Trempealeau, Winona, Holmen, Onalaska, West Salem, Galesville, Centerville, Sparta, Tomah, Arcadia, La Crescent, Melrose, Mindoro and surrounding areas. Free quotes!" />
+        <link rel="canonical" href="https://driftlessgaragedoors.com/" />
+        
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://driftlessgaragedoors.com/" />
+        <meta property="og:title" content="Garage Door Installation & Repair in La Crosse, Trempealeau, Winona & Surrounding Areas | Driftless Garage Doors" />
+        <meta property="og:description" content="Professional garage door installation, repair, and maintenance for homes and businesses in La Crosse, Trempealeau, Winona, Holmen, Onalaska, West Salem, Galesville, Centerville, Sparta, Tomah, Arcadia, La Crescent, Melrose, Mindoro and surrounding areas. Free quotes!" />
+        <meta property="og:image" content="https://driftlessgaragedoors.com/garagedoor1.webp" />
+        
+        {/* Twitter */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://driftlessgaragedoors.com/" />
+        <meta property="twitter:title" content="Garage Door Installation & Repair in La Crosse, Trempealeau, Winona & Surrounding Areas | Driftless Garage Doors" />
+        <meta property="twitter:description" content="Professional garage door installation, repair, and maintenance for homes and businesses in La Crosse, Trempealeau, Winona, Holmen, Onalaska, West Salem, Galesville, Centerville, Sparta, Tomah, Arcadia, La Crescent, Melrose, Mindoro and surrounding areas. Free quotes!" />
+        <meta property="twitter:image" content="https://driftlessgaragedoors.com/garagedoor1.webp" />
+        
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            "name": "Driftless Garage Doors",
+            "description": "Professional garage door installation, repair, and maintenance services for residential and commercial properties in La Crosse, Trempealeau, Winona, Holmen, Onalaska, West Salem, Galesville, Centerville, Sparta, Tomah, Arcadia, La Crescent, Melrose, Mindoro and surrounding areas.",
+            "url": "https://driftlessgaragedoors.com",
+            "telephone": "+1-608-790-3890",
+            "email": "driftlessgaragedoors@gmail.com",
+            "address": {
+              "@type": "PostalAddress",
+              "addressRegion": "WI",
+              "addressCountry": "US"
+            },
+            "geo": {
+              "@type": "GeoCoordinates",
+              "latitude": "43.8014",
+              "longitude": "-91.2396"
+            },
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "5.0",
+              "reviewCount": "100",
+              "bestRating": "5",
+              "worstRating": "1"
+            },
+            "areaServed": [
+              {
+                "@type": "City",
+                "name": "La Crosse",
+                "sameAs": "https://en.wikipedia.org/wiki/La_Crosse,_Wisconsin"
+              },
+              {
+                "@type": "City",
+                "name": "Trempealeau",
+                "sameAs": "https://en.wikipedia.org/wiki/Trempealeau,_Wisconsin"
+              },
+              {
+                "@type": "City",
+                "name": "Winona",
+                "sameAs": "https://en.wikipedia.org/wiki/Winona,_Minnesota"
+              },
+              {
+                "@type": "City", 
+                "name": "Holmen",
+                "sameAs": "https://en.wikipedia.org/wiki/Holmen,_Wisconsin"
+              },
+              {
+                "@type": "City",
+                "name": "Onalaska",
+                "sameAs": "https://en.wikipedia.org/wiki/Onalaska,_Wisconsin"
+              },
+              {
+                "@type": "City",
+                "name": "West Salem",
+                "sameAs": "https://en.wikipedia.org/wiki/West_Salem,_Wisconsin"
+              },
+              {
+                "@type": "City",
+                "name": "Galesville",
+                "sameAs": "https://en.wikipedia.org/wiki/Galesville,_Wisconsin"
+              },
+              {
+                "@type": "City",
+                "name": "Centerville",
+                "sameAs": "https://en.wikipedia.org/wiki/Centerville,_Wisconsin"
+              },
+              {
+                "@type": "City",
+                "name": "Sparta",
+                "sameAs": "https://en.wikipedia.org/wiki/Sparta,_Wisconsin"
+              },
+              {
+                "@type": "City",
+                "name": "Tomah",
+                "sameAs": "https://en.wikipedia.org/wiki/Tomah,_Wisconsin"
+              },
+              {
+                "@type": "City",
+                "name": "Arcadia",
+                "sameAs": "https://en.wikipedia.org/wiki/Arcadia,_Wisconsin"
+              },
+              {
+                "@type": "City",
+                "name": "La Crescent",
+                "sameAs": "https://en.wikipedia.org/wiki/La_Crescent,_Minnesota"
+              },
+              {
+                "@type": "City",
+                "name": "Melrose",
+                "sameAs": "https://en.wikipedia.org/wiki/Melrose,_Wisconsin"
+              },
+              {
+                "@type": "City",
+                "name": "Mindoro",
+                "sameAs": "https://en.wikipedia.org/wiki/Mindoro,_Wisconsin"
+              }
+            ],
+            "serviceType": [
+              "Garage Door Installation",
+              "Garage Door Repair", 
+              "Garage Door Maintenance",
+              "Spring Replacement",
+              "Operator Installation",
+              "Emergency Garage Door Repair"
+            ],
+            "openingHours": "Mo-Fr 08:00-18:00,Sa 09:00-15:00",
+            "priceRange": "$$",
+            "paymentAccepted": ["Cash", "Check", "Credit Card"],
+            "currenciesAccepted": "USD",
+            "sameAs": [
+              "https://www.facebook.com/DriftlessGarageDoors/",
+              "https://www.instagram.com/driftlessgaragedoors"
+            ],
+            "hasOfferCatalog": {
+              "@type": "OfferCatalog",
+              "name": "Garage Door Services",
+              "itemListElement": [
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Garage Door Installation",
+                    "description": "Professional installation of new garage doors"
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Garage Door Repair",
+                    "description": "Expert repair services for all garage door issues"
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Spring Replacement",
+                    "description": "Professional spring replacement services"
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Operator Installation",
+                    "description": "Modern garage door opener installation"
+                  }
+                }
+              ]
+            }
+          })}
+        </script>
+      </Helmet>
+      <img src="/garagedoor1.webp" alt="preload hero" style={{display:'none'}} />
       <div className="min-h-screen bg-gray-900 text-white">
         <Navbar />
 
@@ -22,7 +197,7 @@ function Home() {
                 <span className="text-red-500">GARAGE DOOR SOLUTIONS</span>
               </h1>
               <p className="text-xl text-gray-300 max-w-2xl mx-auto mb-8 animate-slide-up">
-                Professional installation, repair, and maintenance services for residential and commercial properties.
+                Professional installation, repair, and maintenance services for residential and commercial properties
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up">
                 <Link to="/contact" className="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-none font-bold text-lg transition-colors duration-200 border-2 border-red-600 hover:border-red-700 text-center">

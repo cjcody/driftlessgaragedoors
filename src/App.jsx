@@ -1,11 +1,14 @@
 import React, { useEffect, useState, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 
 // Lazy load components for better performance
 const Contact = lazy(() => import('./components/Contact'));
 const Home = lazy(() => import('./components/Home'));
 const Services = lazy(() => import('./components/Services'));
 const Showcase = lazy(() => import('./components/Showcase'));
+const PrivacyPolicy = lazy(() => import('./components/PrivacyPolicy'));
+const NotFound = lazy(() => import('./components/NotFound'));
 
 // Minimal loading component
 const LoadingSpinner = () => (
@@ -47,7 +50,7 @@ function AppContent() {
             import('./components/Showcase')
           ]);
         } catch (error) {
-          console.log('Preloading completed');
+          // Preloading completed
         }
       };
       
@@ -62,14 +65,14 @@ function AppContent() {
   return (
     <>
       <ScrollToTop />
-      <Suspense fallback={shouldShowSpinner ? <LoadingSpinner /> : null}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/showcase" element={<Showcase />} />
-        </Routes>
-      </Suspense>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/showcase" element={<Showcase />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </>
   );
 }
@@ -100,14 +103,16 @@ function App() {
     
     // Wait for logo to load before continuing
     logoPromise.then(() => {
-      console.log('App: Logo preloaded successfully');
+      // Logo preloaded successfully
     });
   }, []);
 
   return (
-    <Router>
-      <AppContent />
-    </Router>
+    <HelmetProvider>
+      <Router>
+        <AppContent />
+      </Router>
+    </HelmetProvider>
   );
 }
 
