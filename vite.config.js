@@ -11,5 +11,37 @@ export default defineConfig({
       // Cache static assets for 1 year
       'Cache-Control': 'public, max-age=31536000, immutable'
     }
+  },
+  build: {
+    // Enable code splitting for better caching
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Separate vendor chunks for better caching
+          vendor: ['react', 'react-dom'],
+          router: ['react-router-dom'],
+          carousel: ['react-responsive-carousel'],
+          helmet: ['react-helmet-async']
+        }
+      }
+    },
+    // Optimize chunk size warnings
+    chunkSizeWarningLimit: 1000,
+    // Enable source maps for production debugging
+    sourcemap: false,
+    // Optimize CSS
+    cssCodeSplit: true,
+    // Minify CSS
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true
+      }
+    }
+  },
+  // Optimize dependencies
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'react-router-dom']
   }
 }) 

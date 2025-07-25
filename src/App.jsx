@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 
-// Import components directly for eager loading
-import Contact from './components/Contact';
+// Import Home component directly for eager loading (critical path)
 import Home from './components/Home';
-import Services from './components/Services';
-import Showcase from './components/Showcase';
-import PrivacyPolicy from './components/PrivacyPolicy';
-import NotFound from './components/NotFound';
 
-
+// Lazy load non-critical components for better performance
+const Contact = lazy(() => import('./components/Contact'));
+const Services = lazy(() => import('./components/Services'));
+const Showcase = lazy(() => import('./components/Showcase'));
+const PrivacyPolicy = lazy(() => import('./components/PrivacyPolicy'));
+const NotFound = lazy(() => import('./components/NotFound'));
 
 // Scroll to top component
 function ScrollToTop() {
@@ -29,11 +29,46 @@ function AppContent() {
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/services" element={<Services />} />
-        <Route path="/showcase" element={<Showcase />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="*" element={<NotFound />} />
+        <Route 
+          path="/contact" 
+          element={
+            <Suspense fallback={null}>
+              <Contact />
+            </Suspense>
+          } 
+        />
+        <Route 
+          path="/services" 
+          element={
+            <Suspense fallback={null}>
+              <Services />
+            </Suspense>
+          } 
+        />
+        <Route 
+          path="/showcase" 
+          element={
+            <Suspense fallback={null}>
+              <Showcase />
+            </Suspense>
+          } 
+        />
+        <Route 
+          path="/privacy-policy" 
+          element={
+            <Suspense fallback={null}>
+              <PrivacyPolicy />
+            </Suspense>
+          } 
+        />
+        <Route 
+          path="*" 
+          element={
+            <Suspense fallback={null}>
+              <NotFound />
+            </Suspense>
+          } 
+        />
       </Routes>
     </>
   );

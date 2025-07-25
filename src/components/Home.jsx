@@ -255,7 +255,7 @@ function Home() {
 
               <div className="text-center">
                 <Link to="/services" className="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-none font-bold text-lg transition-colors duration-200 border-2 border-red-600 hover:border-red-700 inline-block">
-                  LEARN MORE
+                  LEARN MORE ABOUT OUR SERVICES
                 </Link>
               </div>
             </div>
