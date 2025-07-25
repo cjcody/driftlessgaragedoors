@@ -55,18 +55,17 @@ function Showcase() {
             </h2>
             <div className="w-24 h-1 bg-red-500 mx-auto mb-4"></div>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Explore our portfolio of completed projects.
+              Explore our portfolio
             </p>
           </div>
           
           {/* Showcase Content */}
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid gap-8 items-center">
             <div>
-              <h3 className="text-2xl font-bold text-white mb-8 text-center">Our Work</h3>
               <p className="text-gray-300 text-lg mb-6">
                 We take pride in every project we complete. From residential installations to commercial solutions, our work speaks for itself. Each garage door is installed with precision and care, ensuring years of reliable operation.
               </p>
-              <p className="text-gray-300 text-lg mb-8">
+              <p className="text-gray-300 text-lg">
                 Browse through our showcase to see examples of our craftsmanship, attention to detail, and the quality materials we use in every installation.
               </p>
             </div>

@@ -50,11 +50,11 @@ function Services() {
         <div className="max-w-6xl mx-auto px-8">
         <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4">
-              <span className="text-white">OUR</span> <span className="text-red-500">SERVICES</span>
+              <span className="text-white">WHAT </span> <span className="text-red-500">WE OFFER</span>
             </h2>
             <div className="w-24 h-1 bg-red-500 mx-auto mb-4"></div>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Professional garage door solutions for residential and commercial properties in the Driftless Region.
+              Professional garage door solutions for residential and commercial properties in the Driftless Region
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -122,7 +122,7 @@ function Services() {
       {/* CTA Section */}
       <section className="pb-20 bg-gray-900">
         <div className="max-w-4xl mx-auto px-8 text-center">
-          <div className="bg-red-600 p-8 rounded-lg mb-8 max-w-2xl mx-auto">
+          <div className="bg-red-600 p-8 rounded-lg max-w-2xl mx-auto">
             <h2 className="text-2xl font-bold text-white mb-4">
             READY TO GET STARTED?
           </h2>

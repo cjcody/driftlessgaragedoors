@@ -109,8 +109,9 @@ function ImageCarousel({ csvUrl }) {
       
       if (columns[0] && columns[0].startsWith('http')) {
         parsedImages.push({
-          url: columns[0],
-          caption: columns[1] || ``
+          desktopUrl: columns[0],
+          mobileUrl: columns[1] || columns[0],
+          caption: columns[2] || ''
         });
       }
     }
@@ -326,16 +327,19 @@ function ImageCarousel({ csvUrl }) {
         }
       >
         {images.map((image, index) => (
-          <div key={index} className="h-96">
-            <img
-              src={image.url}
-              alt={image.caption}
-              className="w-full h-full object-cover"
-              onError={(e) => {
-                console.error(`Failed to load image: ${image.url}`);
-                e.target.style.display = 'none';
-              }}
-            />
+          <div key={index} className="h-96 relative">
+            <picture>
+              <source media="(max-width: 639px)" srcSet={image.mobileUrl} />
+              <img
+                src={image.desktopUrl}
+                alt=""
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  console.error(`Failed to load image: ${image.desktopUrl}`);
+                  e.target.style.display = 'none';
+                }}
+              />
+            </picture>
             {image.caption && (
               <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-4">
                 <p className="text-center font-semibold">{image.caption}</p>
