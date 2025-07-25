@@ -3,6 +3,11 @@ import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 import './style.css';
 
+// Remove loading state once app loads
+const removeLoadingState = () => {
+  document.body.classList.add('app-loaded');
+};
+
 // Create root and render with performance optimizations
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -13,6 +18,9 @@ const renderApp = () => {
       <App />
     </React.StrictMode>
   );
+  
+  // Remove loading state after render
+  setTimeout(removeLoadingState, 100);
 };
 
 if ('requestIdleCallback' in window) {
