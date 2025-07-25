@@ -105,6 +105,12 @@
     <!-- Preload critical CSS and JS -->
     <link rel="modulepreload" href="/src/main.jsx" crossorigin>
     
+    <!-- Resource hints for background preloading -->
+    <link rel="dns-prefetch" href="//localhost">
+    <link rel="prefetch" href="/contact" as="document">
+    <link rel="prefetch" href="/services" as="document">
+    <link rel="prefetch" href="/showcase" as="document">
+    
     <!-- Cache control meta tags for mobile -->
     <meta http-equiv="Cache-Control" content="public, max-age=31536000, immutable">
 </head>

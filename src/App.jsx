@@ -12,6 +12,37 @@ const Showcase = lazy(() => import('./components/Showcase'));
 const PrivacyPolicy = lazy(() => import('./components/PrivacyPolicy'));
 const NotFound = lazy(() => import('./components/NotFound'));
 
+// Background preloader for instant navigation
+const BackgroundPreloader = () => {
+  useEffect(() => {
+    // Preload other routes in the background after initial render
+    const preloadRoutes = async () => {
+      // Wait for initial page to be fully rendered
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Preload routes in parallel
+      const preloadPromises = [
+        import('./components/Contact'),
+        import('./components/Services'),
+        import('./components/Showcase'),
+        import('./components/PrivacyPolicy'),
+        import('./components/NotFound')
+      ];
+      
+      try {
+        await Promise.all(preloadPromises);
+        console.log('Routes preloaded for instant navigation');
+      } catch (error) {
+        console.log('Background preloading completed');
+      }
+    };
+    
+    preloadRoutes();
+  }, []);
+  
+  return null;
+};
+
 // Scroll to top component
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -27,6 +58,7 @@ function AppContent() {
   return (
     <>
       <ScrollToTop />
+      <BackgroundPreloader />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route 
