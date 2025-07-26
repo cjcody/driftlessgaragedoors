@@ -6,10 +6,14 @@ import { config } from '../config';
 import { Helmet } from 'react-helmet-async';
 
 function Showcase() {
-  // Slideshow images (replace with your own as needed)
+  // Slideshow images with responsive options
   const slideshowImages = [
-    '/garagedoor3.webp',
     '/garagedoor2.webp',
+    '/garagedoor3.webp',
+    {
+      desktop: '/friendphotodrift.webp',
+      mobile: '/friendphotodriftm.webp'
+    },
     '/garagedoor4.webp',
     '/garagedoor5.webp',
   ];
@@ -135,16 +139,33 @@ function Showcase() {
 
       {/* Full-bleed Hero Slideshow */}
       <section className="w-full h-56 md:h-64 relative overflow-hidden">
-        {slideshowImages.map((img, idx) => (
-          <div
-            key={img}
-            className={`absolute inset-0 w-full h-full bg-center bg-cover transition-opacity duration-1000 ${idx === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
-            style={{ backgroundImage: `url(${img})` }}
-            aria-hidden={idx !== currentSlide}
-          />
-        ))}
-        {/* Logo overlay on all slides */}
-        <div className="absolute inset-0 flex items-bottom justify-center md:items-center md:justify-center items-end justify-center pointer-events-none z-20">
+        {slideshowImages.map((img, idx) => {
+          const isResponsive = typeof img === 'object';
+          const imageUrl = isResponsive ? img.desktop : img;
+          
+          return (
+            <div
+              key={isResponsive ? img.desktop : img}
+              className={`absolute inset-0 w-full h-full bg-center bg-cover transition-opacity duration-1000 ${idx === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+              style={{ backgroundImage: `url(${imageUrl})` }}
+              aria-hidden={idx !== currentSlide}
+            >
+              {isResponsive && (
+                <picture className="w-full h-full">
+                  <source media="(max-width: 639px)" srcSet={img.mobile} />
+                  <img 
+                    src={img.desktop} 
+                    alt="" 
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                </picture>
+              )}
+            </div>
+          );
+        })}
+        {/* Logo overlay - hidden for friend photo slide */}
+        <div className={`absolute inset-0 flex items-bottom justify-center md:items-center md:justify-center items-end justify-center pointer-events-none z-20 transition-opacity duration-1000 ${currentSlide === 2 ? 'opacity-0' : 'opacity-100'}`}>
           <img
             src="/slidelogodrift1.png"
             alt="Driftless Garage Doors Logo"
