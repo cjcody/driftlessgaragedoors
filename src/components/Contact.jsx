@@ -409,7 +409,7 @@ function Contact() {
                   </div>
                   <div className="flex-1">
                     <div className="font-semibold text-white">Service Area</div>
-                    <div className="text-gray-400">La Crosse, Trempealeau, Winona & surrounding areas</div>
+                    <div className="text-gray-400">La Crosse, Trempealeau, Winona, and surrounding areas</div>
                   </div>
                 </div>
               </div>

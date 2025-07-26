@@ -11,7 +11,7 @@ function Footer() {
               Professional garage door services for residential and commercial properties in Driftless Region.
             </p>
             <div className="text-sm text-gray-500">
-              <p><strong>Service Areas:</strong> La Crosse, Trempealeau, Winona, & surrounding areas</p>
+              <p><strong>Service Areas:</strong> La Crosse, Trempealeau, Winona, and surrounding areas</p>
             </div>
           </div>
           <div>
