@@ -284,15 +284,12 @@ function Home() {
                   </p>
                 </div>
                 <div className="relative h-96 overflow-hidden rounded-lg">
-                  <picture>
-                    <source media="(max-width: 639px)" srcSet="/garagedoorfamilym.webp" />
-                    <img 
-                      src="/garagedoorfamily.webp" 
-                      alt="Driftless Garage Doors Family" 
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                    />
-                  </picture>
+                  <img 
+                    src="/familyphotodrift3.webp" 
+                    alt="Driftless Garage Doors Family" 
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
                 </div>
               </div>
             </div>

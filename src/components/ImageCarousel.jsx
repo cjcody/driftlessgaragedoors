@@ -19,7 +19,7 @@ function ImageCarousel({ csvUrl }) {
             loading: false, 
             error: null, 
             cacheStatus: 'Loaded from cache',
-            imagesLoaded: false // Will be set to true after images are preloaded
+            imagesLoaded: cacheData.preloaded || false // Use cached preload status
           };
         }
       }
@@ -54,7 +54,8 @@ function ImageCarousel({ csvUrl }) {
       const cacheData = {
         images: data,
         timestamp: Date.now(),
-        csvUrl: csvUrl
+        csvUrl: csvUrl,
+        preloaded: true // Mark that images have been preloaded
       };
       localStorage.setItem(CACHE_KEY, JSON.stringify(cacheData));
     } catch (err) {
@@ -69,7 +70,10 @@ function ImageCarousel({ csvUrl }) {
       if (cached) {
         const cacheData = JSON.parse(cached);
         if (isCacheValid(cacheData) && cacheData.csvUrl === csvUrl) {
-          return cacheData.images;
+          return {
+            images: cacheData.images,
+            preloaded: cacheData.preloaded || false
+          };
         }
       }
     } catch (err) {
@@ -189,8 +193,27 @@ function ImageCarousel({ csvUrl }) {
     if (csvUrl) {
       // If we already have images loaded from cache, just handle background tasks
       if (images.length > 0 && !loading) {
-        // Start preloading images in background
-        preloadImages(images);
+        // Check if images are already preloaded from cache
+        try {
+          const cached = localStorage.getItem(CACHE_KEY);
+          if (cached) {
+            const cacheData = JSON.parse(cached);
+            if (cacheData.preloaded) {
+              // Images are already preloaded, no need to preload again
+              setImagesLoaded(true);
+            } else {
+              // Start preloading images in background
+              preloadImages(images);
+            }
+          } else {
+            // No cache data, preload images
+            preloadImages(images);
+          }
+        } catch (err) {
+          console.warn('Failed to check cache preload status:', err);
+          // Fallback to preloading
+          preloadImages(images);
+        }
         
         // Clear cache status after 3 seconds
         setTimeout(() => setCacheStatus(''), 3000);
@@ -213,16 +236,21 @@ function ImageCarousel({ csvUrl }) {
       }
       
       // Check cache first before setting loading state
-      const cachedImages = loadCache();
-      if (cachedImages && cachedImages.length > 0) {
+      const cachedData = loadCache();
+      if (cachedData && cachedData.images.length > 0) {
         // We have cached data, don't show loading screen
-        setImages(cachedImages);
+        setImages(cachedData.images);
         setLoading(false);
         setError(null);
         setCacheStatus('Loaded from cache');
         
-        // Start preloading images in background
-        preloadImages(cachedImages);
+        // Set imagesLoaded based on cache preload status
+        if (cachedData.preloaded) {
+          setImagesLoaded(true);
+        } else {
+          // Start preloading images in background
+          preloadImages(cachedData.images);
+        }
         
         // Clear cache status after 3 seconds
         setTimeout(() => setCacheStatus(''), 3000);
