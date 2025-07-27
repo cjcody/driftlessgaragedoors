@@ -271,7 +271,7 @@ function Home() {
                   <div className="text-center mb-8 mx-6">
                     <h2 className="text-4xl font-bold mb-4">
                       <span className="text-white">ABOUT </span>
-                      <span className="text-red-500 sm:text-white custom-our-mobile">OUR</span>
+                      <span className="text-red-500 custom-our-mobile">OUR</span>
                       <span className="text-red-500"> TEAM</span>
                     </h2>
                     <div className="w-24 h-1 bg-red-500 mx-auto"></div>
