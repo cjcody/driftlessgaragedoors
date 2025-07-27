@@ -216,7 +216,7 @@ function Navbar() {
         </div>
         {/* Mobile Nav Dropdown */}
         <div className={`lg:hidden absolute top-full left-0 right-0 bg-gray-900 bg-opacity-95 backdrop-blur border-t border-gray-800 transition-all duration-300 ease-in-out ${mobileNavOpen ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform -translate-y-2 pointer-events-none'}`}>
-          <div className="px-4 py-3 space-y-1">
+          <div className="px-4 py-3 space-y-1 text-center">
             <Link to="/" className={`block px-3 py-3 rounded-md text-base font-medium transition-colors ${isActive('/') ? 'text-red-500' : 'text-white hover:text-red-500 hover:bg-gray-800'}`} onClick={(e) => { handleHomeClick(e); setMobileNavOpen(false); }}>
               Home
             </Link>
