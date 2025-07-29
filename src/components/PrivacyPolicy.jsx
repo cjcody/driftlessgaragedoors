@@ -240,20 +240,22 @@ function PrivacyPolicy() {
         
         <div className="bg-gray-800 rounded-lg p-6 mb-6">
           <div className="flex items-center justify-between mb-4">
-            <div>
+            <div className="flex-1 pr-4">
               <h3 className="text-lg font-semibold text-white">Facebook Social Features</h3>
-              <p className="text-gray-400 text-sm">Allow Facebook to show social content and track your activity</p>
+              <p className="text-gray-400 text-sm">Enable Facebook content and tracking</p>
             </div>
-            <button 
-              id="facebook-toggle"
-              className="relative inline-flex h-6 w-11 items-center rounded-full bg-gray-600 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-gray-800"
-              onClick={() => toggleFacebookTracking()}
-            >
-              <span 
-                id="facebook-toggle-slider"
-                className="inline-block h-4 w-4 transform rounded-full bg-white transition duration-200 ease-in-out translate-x-1"
-              ></span>
-            </button>
+            <div className="flex-shrink-0">
+              <button 
+                id="facebook-toggle"
+                className="relative inline-flex h-6 w-11 items-center rounded-full bg-gray-600 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-gray-800 min-w-[2.75rem]"
+                onClick={() => toggleFacebookTracking()}
+              >
+                <span 
+                  id="facebook-toggle-slider"
+                  className="inline-block h-4 w-4 transform rounded-full bg-white transition duration-200 ease-in-out translate-x-1"
+                ></span>
+              </button>
+            </div>
           </div>
           <p className="text-sm text-gray-400">
             <span id="facebook-status">Currently disabled</span>. When enabled, Facebook can collect data about your visit to provide social features. 
