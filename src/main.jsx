@@ -12,6 +12,9 @@ const heroImages = [
   '/slidelogodrift1.png' // Logo overlay
 ];
 
+// Homepage hero image that needs to be preloaded
+const homepageHeroImage = '/garagedoor1.webp';
+
 // Preload hero images and wait for them to load
 const preloadHeroImages = async () => {
   const imagePromises = heroImages.map((src) => {
@@ -34,6 +37,22 @@ const preloadHeroImages = async () => {
   }
 };
 
+// Preload homepage hero image
+const preloadHomepageHero = async () => {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => {
+      console.log('Homepage hero image preloaded successfully');
+      resolve(homepageHeroImage);
+    };
+    img.onerror = () => {
+      console.warn(`Failed to preload homepage hero image: ${homepageHeroImage}`);
+      resolve(homepageHeroImage); // Resolve anyway to not block loading
+    };
+    img.src = homepageHeroImage;
+  });
+};
+
 // Remove loading state once app loads and hero images are ready
 const removeLoadingState = () => {
   document.body.classList.add('app-loaded');
@@ -50,10 +69,13 @@ const renderApp = async () => {
     </React.StrictMode>
   );
   
-  // Wait for hero images to load before removing loading screen
+  // Wait for homepage hero image to load first (critical for homepage)
+  await preloadHomepageHero();
+  
+  // Then wait for slideshow hero images to load
   await preloadHeroImages();
   
-  // Remove loading state after hero images are loaded
+  // Remove loading state after all hero images are loaded
   removeLoadingState();
 };
 

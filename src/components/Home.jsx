@@ -181,7 +181,6 @@ function Home() {
           })}
         </script>
       </Helmet>
-      <img src="/garagedoor1.webp" alt="preload hero" style={{display:'none'}} />
       <div className="min-h-screen bg-gray-900 text-white">
         <Navbar />
 
