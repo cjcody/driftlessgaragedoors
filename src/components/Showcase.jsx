@@ -26,29 +26,49 @@ function Showcase() {
     return () => clearInterval(interval);
   }, [slideshowImages.length]);
 
-  // Lazy loading for Facebook iframe with preloading
+  // Facebook state management
+  const [isFacebookEnabled, setIsFacebookEnabled] = useState(false);
   const [isFacebookVisible, setIsFacebookVisible] = useState(false);
   const [isFacebookPreloaded, setIsFacebookPreloaded] = useState(false);
   const facebookRef = useRef(null);
 
   // Function to sync showcase state with localStorage
   const syncFacebookState = () => {
-    const facebookEnabled = localStorage.getItem('facebook-tracking-enabled');
     const facebookContent = document.getElementById('facebook-content');
     const toggleSection = document.getElementById('facebook-toggle-section');
+    const toggleSwitch = document.getElementById('showcase-facebook-toggle');
+    const toggleSlider = document.getElementById('showcase-facebook-toggle-slider');
     
-    if (facebookContent && toggleSection) {
-      if (facebookEnabled === 'true') {
+    if (facebookContent && toggleSection && toggleSwitch && toggleSlider) {
+      if (isFacebookEnabled) {
+        // Enable Facebook features
         facebookContent.classList.remove('hidden');
         toggleSection.classList.add('hidden');
+        toggleSwitch.classList.add('bg-red-500');
+        toggleSwitch.classList.remove('bg-gray-600');
+        toggleSlider.classList.add('translate-x-6');
+        toggleSlider.classList.remove('translate-x-1');
         
         // Load Facebook SDK if not already loaded
         if (window.loadFacebookSDK && !window.FB) {
           window.loadFacebookSDK();
         }
+        
+        // Parse Facebook plugins after a short delay
+        setTimeout(() => {
+          if (window.FB && window.FB.XFBML) {
+            window.FB.XFBML.parse();
+          }
+        }, 1000);
+        
       } else {
+        // Disable Facebook features
         facebookContent.classList.add('hidden');
         toggleSection.classList.remove('hidden');
+        toggleSwitch.classList.remove('bg-red-500');
+        toggleSwitch.classList.add('bg-gray-600');
+        toggleSlider.classList.remove('translate-x-6');
+        toggleSlider.classList.add('translate-x-1');
         
         // Ensure Facebook tracking is disabled
         if (window.disableFacebookTracking) {
@@ -60,14 +80,26 @@ function Showcase() {
 
   // Check if Facebook was previously enabled and restore state
   useEffect(() => {
-    syncFacebookState();
+    // Initialize Facebook state from localStorage
+    const facebookEnabled = localStorage.getItem('facebook-tracking-enabled') === 'true';
+    setIsFacebookEnabled(facebookEnabled);
+    
+    // Use a small delay to ensure DOM elements are available
+    const timer = setTimeout(() => {
+      syncFacebookState();
+    }, 100);
+    
+    return () => clearTimeout(timer);
   }, []);
 
   // Listen for page visibility changes to sync state
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (!document.hidden) {
-        syncFacebookState();
+        // Use a small delay to ensure DOM elements are available
+        setTimeout(() => {
+          syncFacebookState();
+        }, 100);
       }
     };
 
@@ -78,17 +110,33 @@ function Showcase() {
     };
   }, []);
 
+  // Sync Facebook state when isFacebookEnabled changes
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      syncFacebookState();
+    }, 100);
+    
+    return () => clearTimeout(timer);
+  }, [isFacebookEnabled]);
+
   const toggleShowcaseFacebook = () => {
+    const newEnabledState = !isFacebookEnabled;
+    setIsFacebookEnabled(newEnabledState);
+    
     const facebookContent = document.getElementById('facebook-content');
     const toggleSection = document.getElementById('facebook-toggle-section');
     const toggleSwitch = document.getElementById('showcase-facebook-toggle');
     const toggleSlider = document.getElementById('showcase-facebook-toggle-slider');
 
     if (facebookContent && toggleSection && toggleSwitch && toggleSlider) {
-      if (facebookContent.classList.contains('hidden')) {
+      if (newEnabledState) {
         // Enable Facebook features
         facebookContent.classList.remove('hidden');
         toggleSection.classList.add('hidden'); // Hide the toggle section
+        toggleSwitch.classList.add('bg-red-500');
+        toggleSwitch.classList.remove('bg-gray-600');
+        toggleSlider.classList.add('translate-x-6');
+        toggleSlider.classList.remove('translate-x-1');
         localStorage.setItem('facebook-tracking-enabled', 'true');
         
         // Load Facebook SDK if not already loaded
