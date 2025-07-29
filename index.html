@@ -94,13 +94,12 @@
     <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="manifest" href="/site.webmanifest">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#111827">
     
     <!-- Preload critical resources with high priority -->
     <link rel="preload" href="/Zeiklogo3.png" as="image" type="image/png" fetchpriority="high">
-    <link rel="preload" as="image" href="/garagedoor1.webp" fetchpriority="high">
     
     <!-- Preload hero slideshow images for smooth loading -->
     <link rel="preload" as="image" href="/garagedoor3.webp" fetchpriority="high">
@@ -134,5 +133,9 @@
     <div id="root"></div>
     
     <script type="module" src="/src/main.jsx"></script>
+    
+    <!-- Facebook SDK for responsive social plugins -->
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v19.0"></script>
 </body>
 </html> 

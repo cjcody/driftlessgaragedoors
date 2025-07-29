@@ -199,7 +199,7 @@ function Services() {
       {/* Services Grid */}
       <section className="py-20 bg-gray-900">
         <div className="max-w-6xl mx-auto px-8">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10">
             <h2 className="text-4xl font-bold mb-4">
               <span className="text-white">WHAT </span> <span className="text-red-500">WE OFFER</span>
             </h2>

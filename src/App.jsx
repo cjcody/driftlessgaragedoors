@@ -117,7 +117,7 @@ function AppContent() {
 function App() {
   return (
     <HelmetProvider>
-      <Router>
+      <Router future={{ v7_relativeSplatPath: true, v7_startTransition: true }}>
         <AppContent />
       </Router>
     </HelmetProvider>

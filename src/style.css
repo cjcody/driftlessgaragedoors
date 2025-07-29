@@ -122,4 +122,11 @@ body {
   .custom-our-mobile {
     color: #fff !important;
   }
+}
+
+/* Hide Facebook section on very small screens */
+@media (max-width: 349px) {
+  .facebook-section {
+    display: none !important;
+  }
 } 

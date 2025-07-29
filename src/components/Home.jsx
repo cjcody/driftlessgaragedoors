@@ -266,7 +266,7 @@ function Home() {
             <div className="absolute top-0 left-0 w-full h-32 bg-black transform -skew-y-3 origin-top-left"></div>
             <div className="absolute top-6 left-0 w-full h-32 bg-black transform -skew-y-3 origin-top-left hidden 2xl:block"></div>
             <div className="relative max-w-6xl mx-auto px-8">
-              <div className="grid lg:grid-cols-2 gap-16 items-center">
+              <div className="grid lg:grid-cols-2 gap-12 items-center">
                 <div>
                   <div className="text-center mb-8 mx-6">
                     <h2 className="text-4xl font-bold mb-4">
@@ -279,7 +279,7 @@ function Home() {
                   <p className="text-gray-300 text-lg mb-6">
                   We are a small, local and family-owned garage door company servicing the Driftless Region in residential and commercial garage doors. We offer quality products at a great price and take pride in our work while always putting our customers first.
                   </p>
-                  <p className="text-gray-300 text-lg mb-8">
+                  <p className="text-gray-300 text-lg">
                   Whether you need a quick preventative maintenance service, spring replacement, or are looking to update the look of your home, we have you covered.
                   </p>
                 </div>
@@ -301,7 +301,7 @@ function Home() {
             <div className="absolute -top-20 left-0 w-full h-10 bg-black transform skew-y-3 origin-top-left hidden lg:block"></div>
             <div className="absolute -top-24 left-0 w-full h-20 bg-black transform skew-y-2 origin-top-left hidden 2xl:block"></div>
             <div className="relative max-w-6xl mx-auto px-8">
-              <div className="text-center mb-16">
+              <div className="text-center mb-12">
                 <h2 className="text-4xl font-bold mb-4">
                   <span className="text-white">WHAT OUR</span> <span className="text-red-500">CUSTOMERS SAY</span>
                 </h2>

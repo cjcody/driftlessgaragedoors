@@ -363,7 +363,7 @@ function Contact() {
       {/* Contact Section - Full Width */}
       <section className="relative py-20 bg-gray-900">
         <div className="relative max-w-6xl mx-auto px-8">
-          <div className="text-center mb-16">
+          <div className="text-center mb-10">
             <h2 className="text-4xl font-bold mb-4">
               <span className="text-white">GET IN</span> <span className="text-red-500">TOUCH</span>
             </h2>

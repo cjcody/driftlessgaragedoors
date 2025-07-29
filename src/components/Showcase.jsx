@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import ImageCarousel from './ImageCarousel';
@@ -25,6 +25,76 @@ function Showcase() {
     }, 5000); // 5 seconds per slide
     return () => clearInterval(interval);
   }, [slideshowImages.length]);
+
+  // Lazy loading for Facebook iframe with preloading
+  const [isFacebookVisible, setIsFacebookVisible] = useState(false);
+  const [isFacebookPreloaded, setIsFacebookPreloaded] = useState(false);
+  const facebookRef = useRef(null);
+
+  // Preload Facebook iframe after initial page load (similar to route preloading)
+  useEffect(() => {
+    const preloadFacebook = async () => {
+      // Wait for initial page to be fully rendered
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      setIsFacebookPreloaded(true);
+    };
+    
+    preloadFacebook();
+  }, []);
+
+  // Facebook SDK re-parsing for plugins
+  useEffect(() => {
+    const parseFacebookPlugins = () => {
+      // Check if Facebook SDK is loaded
+      if (window.FB && window.FB.XFBML) {
+        try {
+          window.FB.XFBML.parse();
+          console.log('Facebook plugins parsed');
+          
+          // Check if plugin loaded successfully after 3 seconds
+          setTimeout(() => {
+            try {
+              const fbPost = document.querySelector('.fb-post');
+              if (fbPost && fbPost.children.length === 0) {
+                console.log('Facebook plugin failed to load, showing fallback');
+                document.getElementById('facebook-fallback')?.classList.remove('hidden');
+              }
+            } catch (error) {
+              console.log('Facebook plugin check failed:', error.message);
+            }
+          }, 3000);
+        } catch (error) {
+          console.log('Facebook XFBML parse failed:', error.message);
+        }
+      } else {
+        // Retry after a short delay if SDK isn't loaded yet
+        setTimeout(parseFacebookPlugins, 1000);
+      }
+    };
+
+    // Parse Facebook plugins when component mounts
+    parseFacebookPlugins();
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && isFacebookPreloaded) {
+          setIsFacebookVisible(true);
+          observer.disconnect(); // Only load once
+        }
+      },
+      { threshold: 0.1 } // Start loading when 10% visible
+    );
+
+    if (facebookRef.current) {
+      observer.observe(facebookRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [isFacebookPreloaded]);
+
+
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
@@ -178,7 +248,7 @@ function Showcase() {
       {/* Showcase Section - Full Width */}
       <section className="relative py-20 bg-gray-900">
         <div className="relative max-w-6xl mx-auto px-8">
-          <div className="text-center mb-16">
+          <div className="text-center mb-10">
             <h2 className="text-4xl font-bold mb-4">
               <span className="text-white">COMPANY</span> <span className="text-red-500">SHOWCASE</span>
             </h2>
@@ -201,6 +271,81 @@ function Showcase() {
             <ImageCarousel 
               csvUrl={config.googleSheetCsvUrl}
             />
+          </div>
+        </div>
+      </section>
+
+      {/* Facebook SDK Plugin Test Section */}
+      <section className="relative pb-20 bg-gray-900 facebook-section">
+        <div className="relative max-w-4xl mx-auto px-8">
+          <div className="text-center mb-10">
+            <h3 className="text-3xl font-bold mb-4">
+              <span className="text-white">FOLLOW</span> <span className="text-red-500">OUR WORK</span>
+            </h3>
+            <div className="w-20 h-1 bg-red-500 mx-auto"></div>
+          </div>
+          
+          {/* Facebook Post Container */}
+          <div className="bg-gray-800 rounded-lg shadow-xl p-6 md:p-8 border border-gray-700">
+            <div className="flex items-center mb-4">
+              <div className="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center mr-4">
+                <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+              </div>
+              <div>
+                <h4 className="text-white font-semibold">Driftless Garage Doors</h4>
+                <p className="text-gray-400 text-sm">Recent post</p>
+              </div>
+            </div>
+            
+            {/* Facebook Post Embed - SDK Plugin Approach */}
+            <div className="flex justify-center">
+              {/* Desktop: Facebook Page Plugin */}
+              <div className="hidden md:block">
+                <div 
+                  className="fb-page" 
+                  data-href="https://www.facebook.com/DriftlessGarageDoors"
+                  data-tabs="timeline"
+                  data-width="500"
+                  data-height="600"
+                  data-small-header="false"
+                  data-adapt-container-width="true"
+                  data-hide-cover="false"
+                  data-show-facepile="true"
+                ></div>
+              </div>
+              
+              {/* Mobile: Facebook Page Plugin scaled down */}
+              <div className="md:hidden facebook-mobile-container" style={{transform: 'scale(0.58)', transformOrigin: 'center top', marginBottom: '-15.75rem'}}>
+                <div 
+                  className="fb-page" 
+                  data-href="https://www.facebook.com/DriftlessGarageDoors"
+                  data-tabs="timeline"
+                  data-width="500"
+                  data-height="600"
+                  data-small-header="false"
+                  data-adapt-container-width="true"
+                  data-hide-cover="false"
+                  data-show-facepile="true"
+                ></div>
+              </div>
+            </div>
+            
+            {/* Call to Action */}
+            <div className="text-center mt-6">
+              <a 
+                href="https://facebook.com/driftlessgaragedoors" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors duration-200"
+              >
+                <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+                Follow Us on Facebook
+              </a>
+            </div>
           </div>
         </div>
       </section>
