@@ -31,69 +31,95 @@ function Showcase() {
   const [isFacebookPreloaded, setIsFacebookPreloaded] = useState(false);
   const facebookRef = useRef(null);
 
-  // Preload Facebook iframe after initial page load (similar to route preloading)
-  useEffect(() => {
-    const preloadFacebook = async () => {
-      // Wait for initial page to be fully rendered
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      setIsFacebookPreloaded(true);
-    };
+  // Function to sync showcase state with localStorage
+  const syncFacebookState = () => {
+    const facebookEnabled = localStorage.getItem('facebook-tracking-enabled');
+    const facebookContent = document.getElementById('facebook-content');
+    const toggleSection = document.getElementById('facebook-toggle-section');
     
-    preloadFacebook();
-  }, []);
-
-  // Facebook SDK re-parsing for plugins
-  useEffect(() => {
-    const parseFacebookPlugins = () => {
-      // Check if Facebook SDK is loaded
-      if (window.FB && window.FB.XFBML) {
-        try {
-          window.FB.XFBML.parse();
-          console.log('Facebook plugins parsed');
-          
-          // Check if plugin loaded successfully after 3 seconds
-          setTimeout(() => {
-            try {
-              const fbPost = document.querySelector('.fb-post');
-              if (fbPost && fbPost.children.length === 0) {
-                console.log('Facebook plugin failed to load, showing fallback');
-                document.getElementById('facebook-fallback')?.classList.remove('hidden');
-              }
-            } catch (error) {
-              console.log('Facebook plugin check failed:', error.message);
-            }
-          }, 3000);
-        } catch (error) {
-          console.log('Facebook XFBML parse failed:', error.message);
+    if (facebookContent && toggleSection) {
+      if (facebookEnabled === 'true') {
+        facebookContent.classList.remove('hidden');
+        toggleSection.classList.add('hidden');
+        
+        // Load Facebook SDK if not already loaded
+        if (window.loadFacebookSDK && !window.FB) {
+          window.loadFacebookSDK();
         }
       } else {
-        // Retry after a short delay if SDK isn't loaded yet
-        setTimeout(parseFacebookPlugins, 1000);
+        facebookContent.classList.add('hidden');
+        toggleSection.classList.remove('hidden');
+        
+        // Ensure Facebook tracking is disabled
+        if (window.disableFacebookTracking) {
+          window.disableFacebookTracking();
+        }
+      }
+    }
+  };
+
+  // Check if Facebook was previously enabled and restore state
+  useEffect(() => {
+    syncFacebookState();
+  }, []);
+
+  // Listen for page visibility changes to sync state
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        syncFacebookState();
       }
     };
 
-    // Parse Facebook plugins when component mounts
-    parseFacebookPlugins();
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
   }, []);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && isFacebookPreloaded) {
-          setIsFacebookVisible(true);
-          observer.disconnect(); // Only load once
+  const toggleShowcaseFacebook = () => {
+    const facebookContent = document.getElementById('facebook-content');
+    const toggleSection = document.getElementById('facebook-toggle-section');
+    const toggleSwitch = document.getElementById('showcase-facebook-toggle');
+    const toggleSlider = document.getElementById('showcase-facebook-toggle-slider');
+
+    if (facebookContent && toggleSection && toggleSwitch && toggleSlider) {
+      if (facebookContent.classList.contains('hidden')) {
+        // Enable Facebook features
+        facebookContent.classList.remove('hidden');
+        toggleSection.classList.add('hidden'); // Hide the toggle section
+        localStorage.setItem('facebook-tracking-enabled', 'true');
+        
+        // Load Facebook SDK if not already loaded
+        if (window.loadFacebookSDK) {
+          window.loadFacebookSDK();
         }
-      },
-      { threshold: 0.1 } // Start loading when 10% visible
-    );
-
-    if (facebookRef.current) {
-      observer.observe(facebookRef.current);
+        
+        // Parse Facebook plugins after a short delay
+        setTimeout(() => {
+          if (window.FB && window.FB.XFBML) {
+            window.FB.XFBML.parse();
+          }
+        }, 1000);
+        
+      } else {
+        // Disable Facebook features
+        facebookContent.classList.add('hidden');
+        toggleSection.classList.remove('hidden'); // Show the toggle section again
+        toggleSwitch.classList.remove('bg-red-500');
+        toggleSwitch.classList.add('bg-gray-600');
+        toggleSlider.classList.remove('translate-x-6');
+        toggleSlider.classList.add('translate-x-1');
+        localStorage.setItem('facebook-tracking-enabled', 'false');
+        
+        // Disable Facebook tracking and clear cookies
+        if (window.disableFacebookTracking) {
+          window.disableFacebookTracking();
+        }
+      }
     }
-
-    return () => observer.disconnect();
-  }, [isFacebookPreloaded]);
-
+  };
 
 
   return (
@@ -285,7 +311,7 @@ function Showcase() {
             <div className="w-20 h-1 bg-red-500 mx-auto"></div>
           </div>
           
-          {/* Facebook Post Container */}
+          {/* Facebook Content Container */}
           <div className="bg-gray-800 rounded-lg shadow-xl p-6 md:p-8 border border-gray-700">
             <div className="flex items-center mb-4">
               <div className="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center mr-4">
@@ -295,40 +321,75 @@ function Showcase() {
               </div>
               <div>
                 <h4 className="text-white font-semibold">Driftless Garage Doors</h4>
-                <p className="text-gray-400 text-sm">Recent post</p>
+                <p className="text-gray-400 text-sm">Follow our latest work and updates</p>
               </div>
             </div>
             
-            {/* Facebook Post Embed - SDK Plugin Approach */}
-            <div className="flex justify-center">
-              {/* Desktop: Facebook Page Plugin */}
-              <div className="hidden md:block">
-                <div 
-                  className="fb-page" 
-                  data-href="https://www.facebook.com/DriftlessGarageDoors"
-                  data-tabs="timeline"
-                  data-width="500"
-                  data-height="600"
-                  data-small-header="false"
-                  data-adapt-container-width="true"
-                  data-hide-cover="false"
-                  data-show-facepile="true"
-                ></div>
+            {/* Facebook Toggle Section */}
+            <div id="facebook-toggle-section" className="text-center py-8">
+              <div className="mb-6">
+                <h4 className="text-xl font-semibold text-white mb-2">Enable Facebook Social Features</h4>
+                <p className="text-gray-400 mb-6">
+                  Connect with us on Facebook to see our latest projects, customer reviews, and garage door tips.
+                </p>
+                
+                {/* Toggle Switch */}
+                <div className="flex items-center justify-center mb-6">
+                  <div className="flex items-center">
+                    <span className="text-gray-400 mr-4 text-sm">Disabled</span>
+                    <button 
+                      id="showcase-facebook-toggle"
+                      className="relative inline-flex h-6 w-11 items-center rounded-full bg-gray-600 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-gray-800"
+                      onClick={() => toggleShowcaseFacebook()}
+                    >
+                      <span 
+                        id="showcase-facebook-toggle-slider"
+                        className="inline-block h-4 w-4 transform rounded-full bg-white transition duration-200 ease-in-out translate-x-1"
+                      ></span>
+                    </button>
+                    <span className="text-gray-400 ml-4 text-sm">Enabled</span>
+                  </div>
+                </div>
+                
+                <p className="text-sm text-gray-500">
+                  When enabled, Facebook can collect data about your visit to provide social features. 
+                  You can control this setting anytime in our <a href="/privacy-policy#tracking" className="text-red-400 hover:text-red-300">Privacy Policy</a>.
+                </p>
               </div>
-              
-              {/* Mobile: Facebook Page Plugin scaled down */}
-              <div className="md:hidden facebook-mobile-container" style={{transform: 'scale(0.58)', transformOrigin: 'center top', marginBottom: '-15.75rem'}}>
-                <div 
-                  className="fb-page" 
-                  data-href="https://www.facebook.com/DriftlessGarageDoors"
-                  data-tabs="timeline"
-                  data-width="500"
-                  data-height="600"
-                  data-small-header="false"
-                  data-adapt-container-width="true"
-                  data-hide-cover="false"
-                  data-show-facepile="true"
-                ></div>
+            </div>
+            
+            {/* Facebook Content (Hidden by default) */}
+            <div id="facebook-content" className="hidden">
+              <div className="flex justify-center">
+                {/* Desktop: Facebook Page Plugin */}
+                <div className="hidden md:block">
+                  <div 
+                    className="fb-page" 
+                    data-href="https://www.facebook.com/DriftlessGarageDoors"
+                    data-tabs="timeline"
+                    data-width="500"
+                    data-height="600"
+                    data-small-header="false"
+                    data-adapt-container-width="true"
+                    data-hide-cover="false"
+                    data-show-facepile="true"
+                  ></div>
+                </div>
+                
+                {/* Mobile: Facebook Page Plugin scaled down */}
+                <div className="md:hidden facebook-mobile-container" style={{transform: 'scale(0.58)', transformOrigin: 'center top', marginBottom: '-15.75rem'}}>
+                  <div 
+                    className="fb-page" 
+                    data-href="https://www.facebook.com/DriftlessGarageDoors"
+                    data-tabs="timeline"
+                    data-width="500"
+                    data-height="600"
+                    data-small-header="false"
+                    data-adapt-container-width="true"
+                    data-hide-cover="false"
+                    data-show-facepile="true"
+                  ></div>
+                </div>
               </div>
             </div>
             

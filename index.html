@@ -135,8 +135,54 @@
     
     <script type="module" src="/src/main.jsx"></script>
     
-    <!-- Facebook SDK for responsive social plugins -->
+    <!-- Facebook SDK will be loaded dynamically only when user explicitly enables it -->
     <div id="fb-root"></div>
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v19.0"></script>
+    <script>
+      // Function to load Facebook SDK only when user explicitly enables it
+      window.loadFacebookSDK = function() {
+        if (!window.FB) {
+          const script = document.createElement('script');
+          script.async = true;
+          script.defer = true;
+          script.crossOrigin = 'anonymous';
+          script.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v19.0';
+          document.head.appendChild(script);
+          
+          // Clear any existing Facebook cookies when loading SDK
+          const cookies = document.cookie.split(';');
+          cookies.forEach(cookie => {
+            const [name] = cookie.split('=');
+            if (name.trim().startsWith('_fb') || name.trim().startsWith('fr') || name.trim().startsWith('c_user')) {
+              document.cookie = `${name.trim()}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.facebook.com`;
+              document.cookie = `${name.trim()}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=facebook.com`;
+            }
+          });
+        }
+      };
+      
+      // Function to disable Facebook tracking and clear cookies
+      window.disableFacebookTracking = function() {
+        // Clear Facebook cookies
+        const cookies = document.cookie.split(';');
+        cookies.forEach(cookie => {
+          const [name] = cookie.split('=');
+          if (name.trim().startsWith('_fb') || name.trim().startsWith('fr') || name.trim().startsWith('c_user')) {
+            document.cookie = `${name.trim()}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.facebook.com`;
+            document.cookie = `${name.trim()}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=facebook.com`;
+          }
+        });
+        
+        // Remove Facebook SDK script if loaded
+        const fbScript = document.querySelector('script[src*="connect.facebook.net"]');
+        if (fbScript) {
+          fbScript.remove();
+        }
+        
+        // Clear Facebook global object
+        if (window.FB) {
+          delete window.FB;
+        }
+      };
+    </script>
 </body>
 </html> 
