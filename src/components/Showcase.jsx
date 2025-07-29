@@ -349,19 +349,22 @@ function Showcase() {
         </div>
       </section>
 
-      {/* Facebook SDK Plugin Test Section */}
+      {/* Facebook SDK Plugin Section */}
       <section className="relative pb-20 bg-gray-900 facebook-section">
         <div className="relative max-w-4xl mx-auto px-8">
           <div className="text-center mb-10">
             <h3 className="text-3xl font-bold mb-4">
               <span className="text-white">FOLLOW</span> <span className="text-red-500">OUR WORK</span>
             </h3>
-            <div className="w-20 h-1 bg-red-500 mx-auto"></div>
+            <div className="w-20 h-1 bg-red-500 mx-auto mb-4"></div>
+            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+            Stay connected for the latest projects, customer reviews, and garage door tips
+            </p>
           </div>
           
           {/* Facebook Content Container */}
           <div className="bg-gray-800 rounded-lg shadow-xl p-6 md:p-8 border border-gray-700">
-            <div className="flex items-center mb-4">
+            <div className="flex items-center">
               <div className="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center mr-4">
                 <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
@@ -369,17 +372,13 @@ function Showcase() {
               </div>
               <div>
                 <h4 className="text-white font-semibold">Driftless Garage Doors</h4>
-                <p className="text-gray-400 text-sm">Follow our latest work and updates</p>
               </div>
             </div>
             
             {/* Facebook Toggle Section */}
             <div id="facebook-toggle-section" className="text-center py-8">
               <div className="mb-6">
-                <h4 className="text-xl font-semibold text-white mb-2">Enable Facebook Social Features</h4>
-                <p className="text-gray-400 mb-6">
-                  Connect with us on Facebook to see our latest projects, customer reviews, and garage door tips.
-                </p>
+                <h4 className="text-xl font-semibold text-white mb-2">Enable Live Facebook Feed</h4>
                 
                 {/* Toggle Switch */}
                 <div className="flex items-center justify-center mb-6">
@@ -400,43 +399,46 @@ function Showcase() {
                 </div>
                 
                 <p className="text-sm text-gray-500">
-                  When enabled, Facebook can collect data about your visit to provide social features. 
-                  You can control this setting anytime in our <a href="/privacy-policy#tracking" className="text-red-400 hover:text-red-300">Privacy Policy</a>.
+                  When enabled, this feature will display our latest Facebook posts on this page. Please note that loading this feed allows Facebook to collect certain data about your visit — such as your IP address, browser details, and pages you view.
+                  <br /><br />
+                  You can change this setting anytime. Learn more in our <a href="/privacy-policy#tracking" className="text-red-400 hover:text-red-300">Privacy Policy</a>.
                 </p>
               </div>
             </div>
             
             {/* Facebook Content (Hidden by default) */}
             <div id="facebook-content" className="hidden">
-              <div className="flex justify-center">
-                {/* Desktop: Facebook Page Plugin */}
-                <div className="hidden md:block">
-                  <div 
-                    className="fb-page" 
-                    data-href="https://www.facebook.com/DriftlessGarageDoors"
-                    data-tabs="timeline"
-                    data-width="500"
-                    data-height="600"
-                    data-small-header="false"
-                    data-adapt-container-width="true"
-                    data-hide-cover="false"
-                    data-show-facepile="true"
-                  ></div>
-                </div>
-                
-                {/* Mobile: Facebook Page Plugin scaled down */}
-                <div className="md:hidden facebook-mobile-container" style={{transform: 'scale(0.58)', transformOrigin: 'center top', marginBottom: '-15.75rem'}}>
-                  <div 
-                    className="fb-page" 
-                    data-href="https://www.facebook.com/DriftlessGarageDoors"
-                    data-tabs="timeline"
-                    data-width="500"
-                    data-height="600"
-                    data-small-header="false"
-                    data-adapt-container-width="true"
-                    data-hide-cover="false"
-                    data-show-facepile="true"
-                  ></div>
+              <div className="text-center pt-6">
+                <div className="flex justify-center">
+                  {/* Desktop: Facebook Page Plugin */}
+                  <div className="hidden md:block">
+                    <div 
+                      className="fb-page" 
+                      data-href="https://www.facebook.com/DriftlessGarageDoors"
+                      data-tabs="timeline"
+                      data-width="500"
+                      data-height="600"
+                      data-small-header="false"
+                      data-adapt-container-width="true"
+                      data-hide-cover="false"
+                      data-show-facepile="true"
+                    ></div>
+                  </div>
+                  
+                  {/* Mobile: Facebook Page Plugin scaled down */}
+                  <div className="md:hidden facebook-mobile-container flex justify-center" style={{transform: 'scale(0.58)', transformOrigin: 'center top', marginBottom: '-15.75rem', width: '100%'}}>
+                    <div 
+                      className="fb-page" 
+                      data-href="https://www.facebook.com/DriftlessGarageDoors"
+                      data-tabs="timeline"
+                      data-width="500"
+                      data-height="600"
+                      data-small-header="false"
+                      data-adapt-container-width="true"
+                      data-hide-cover="false"
+                      data-show-facepile="true"
+                    ></div>
+                  </div>
                 </div>
               </div>
             </div>
