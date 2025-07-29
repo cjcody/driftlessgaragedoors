@@ -206,7 +206,7 @@ function PrivacyPolicy() {
         <h1 className="text-4xl font-bold mb-6 text-center">Privacy Policy</h1>
         <p className="mb-4">This Privacy Policy describes how Driftless Garage Doors collects, uses, and protects your information when you use our website.</p>
         <h2 className="text-2xl font-bold mt-8 mb-2">Information We Collect</h2>
-        <p className="mb-4">We may collect information you provide directly to us, such as when you fill out a contact form.</p>
+        <p className="mb-4">We may collect information you provide directly to us, such as when you fill out a quote form.</p>
         <h2 className="text-2xl font-bold mt-8 mb-2">How We Use Information</h2>
         <p className="mb-4">We use your information to respond to inquiries, provide services, and improve our website. We do not sell your personal information.</p>
         <h2 className="text-2xl font-bold mt-8 mb-2">Cookies & Browser Storage</h2>
@@ -273,7 +273,7 @@ function PrivacyPolicy() {
         </div>
         
         <h2 className="text-2xl font-bold mt-8 mb-2">Contact Us</h2>
-        <p>If you have any questions about this Privacy Policy, please contact us through our website's contact page.</p>
+        <p>If you have any questions about this Privacy Policy, please contact us.</p>
         <div className="mt-8 text-center">
           <Link to="/" className="text-red-400 hover:underline text-lg font-semibold">&larr; Back to Home</Link>
         </div>
