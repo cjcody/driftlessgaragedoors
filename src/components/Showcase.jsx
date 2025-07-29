@@ -376,34 +376,32 @@ function Showcase() {
             </div>
             
             {/* Facebook Toggle Section */}
-            <div id="facebook-toggle-section" className="text-center py-8">
-              <div className="mb-6">
-                <h4 className="text-xl font-semibold text-white mb-2">Enable Live Facebook Feed</h4>
-                
-                {/* Toggle Switch */}
-                <div className="flex items-center justify-center mb-6">
-                  <div className="flex items-center">
-                    <span className="text-gray-400 mr-4 text-sm">Disabled</span>
-                    <button 
-                      id="showcase-facebook-toggle"
-                      className="relative inline-flex h-6 w-11 items-center rounded-full bg-gray-600 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-gray-800"
-                      onClick={() => toggleShowcaseFacebook()}
-                    >
-                      <span 
-                        id="showcase-facebook-toggle-slider"
-                        className="inline-block h-4 w-4 transform rounded-full bg-white transition duration-200 ease-in-out translate-x-1"
-                      ></span>
-                    </button>
-                    <span className="text-gray-400 ml-4 text-sm">Enabled</span>
-                  </div>
+            <div id="facebook-toggle-section" className="text-center pt-8">
+              <h4 className="text-xl font-semibold text-white mb-2">Enable Live Facebook Feed</h4>
+              
+              {/* Toggle Switch */}
+              <div className="flex items-center justify-center mb-6">
+                <div className="flex items-center">
+                  <span className="text-gray-400 mr-4 text-sm">Disabled</span>
+                  <button 
+                    id="showcase-facebook-toggle"
+                    className="relative inline-flex h-6 w-11 items-center rounded-full bg-gray-600 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-gray-800"
+                    onClick={() => toggleShowcaseFacebook()}
+                  >
+                    <span 
+                      id="showcase-facebook-toggle-slider"
+                      className="inline-block h-4 w-4 transform rounded-full bg-white transition duration-200 ease-in-out translate-x-1"
+                    ></span>
+                  </button>
+                  <span className="text-gray-400 ml-4 text-sm">Enabled</span>
                 </div>
-                
-                <p className="text-sm text-gray-500">
-                  When enabled, this feature will display our latest Facebook posts on this page. Please note that loading this feed allows Facebook to collect certain data about your visit — such as your IP address, browser details, and pages you view.
-                  <br /><br />
-                  You can change this setting anytime. Learn more in our <a href="/privacy-policy#tracking" className="text-red-400 hover:text-red-300">Privacy Policy</a>.
-                </p>
               </div>
+              
+              <p className="text-sm text-gray-500">
+                When enabled, this feature will display our latest Facebook posts on this page. Please note that loading this feed allows Facebook to collect certain data about your visit — such as your IP address, browser details, and pages you view.
+                <br /><br />
+                You can change this setting anytime. Learn more in our <a href="/privacy-policy#tracking" className="text-red-400 hover:text-red-300">Privacy Policy</a>.
+              </p>
             </div>
             
             {/* Facebook Content (Hidden by default) */}
