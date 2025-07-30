@@ -141,22 +141,17 @@
       // Function to load Facebook SDK only when user explicitly enables it
       window.loadFacebookSDK = function() {
         if (!window.FB) {
+          // Check if script is already being loaded
+          if (document.querySelector('script[src*="connect.facebook.net"]')) {
+            return;
+          }
+          
           const script = document.createElement('script');
           script.async = true;
           script.defer = true;
           script.crossOrigin = 'anonymous';
           script.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v19.0';
           document.head.appendChild(script);
-          
-          // Clear any existing Facebook cookies when loading SDK
-          const cookies = document.cookie.split(';');
-          cookies.forEach(cookie => {
-            const [name] = cookie.split('=');
-            if (name.trim().startsWith('_fb') || name.trim().startsWith('fr') || name.trim().startsWith('c_user')) {
-              document.cookie = `${name.trim()}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.facebook.com`;
-              document.cookie = `${name.trim()}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=facebook.com`;
-            }
-          });
         }
       };
       

@@ -28,143 +28,70 @@ function Showcase() {
 
   // Facebook state management
   const [isFacebookEnabled, setIsFacebookEnabled] = useState(false);
-  const [isFacebookVisible, setIsFacebookVisible] = useState(false);
-  const [isFacebookPreloaded, setIsFacebookPreloaded] = useState(false);
-  const facebookRef = useRef(null);
+  const [isFacebookSDKReady, setIsFacebookSDKReady] = useState(false);
+  const hasInitializedFacebook = useRef(false);
 
-  // Function to sync showcase state with localStorage
-  const syncFacebookState = () => {
-    const facebookContent = document.getElementById('facebook-content');
-    const toggleSection = document.getElementById('facebook-toggle-section');
-    const toggleSwitch = document.getElementById('showcase-facebook-toggle');
-    const toggleSlider = document.getElementById('showcase-facebook-toggle-slider');
-    
-    if (facebookContent && toggleSection && toggleSwitch && toggleSlider) {
-      if (isFacebookEnabled) {
-        // Enable Facebook features
-        facebookContent.classList.remove('hidden');
-        toggleSection.classList.add('hidden');
-        toggleSwitch.classList.add('bg-red-500');
-        toggleSwitch.classList.remove('bg-gray-600');
-        toggleSlider.classList.add('translate-x-6');
-        toggleSlider.classList.remove('translate-x-1');
-        
-        // Load Facebook SDK if not already loaded
-        if (window.loadFacebookSDK && !window.FB) {
-          window.loadFacebookSDK();
-        }
-        
-        // Parse Facebook plugins after a short delay
-        setTimeout(() => {
-          if (window.FB && window.FB.XFBML) {
-            window.FB.XFBML.parse();
-          }
-        }, 1000);
-        
-      } else {
-        // Disable Facebook features
-        facebookContent.classList.add('hidden');
-        toggleSection.classList.remove('hidden');
-        toggleSwitch.classList.remove('bg-red-500');
-        toggleSwitch.classList.add('bg-gray-600');
-        toggleSlider.classList.remove('translate-x-6');
-        toggleSlider.classList.add('translate-x-1');
-        
-        // Ensure Facebook tracking is disabled
-        if (window.disableFacebookTracking) {
-          window.disableFacebookTracking();
-        }
-      }
-    }
-  };
+
 
   // Check if Facebook was previously enabled and restore state
   useEffect(() => {
     // Initialize Facebook state from localStorage
     const facebookEnabled = localStorage.getItem('facebook-tracking-enabled') === 'true';
     setIsFacebookEnabled(facebookEnabled);
-    
-    // Use a small delay to ensure DOM elements are available
-    const timer = setTimeout(() => {
-      syncFacebookState();
-    }, 100);
-    
-    return () => clearTimeout(timer);
   }, []);
 
-  // Listen for page visibility changes to sync state
+
+
+
+
+  // Handle Facebook SDK loading and initialization
   useEffect(() => {
-    const handleVisibilityChange = () => {
-      if (!document.hidden) {
-        // Use a small delay to ensure DOM elements are available
-        setTimeout(() => {
-          syncFacebookState();
-        }, 100);
+    if (isFacebookEnabled) {
+      // Load Facebook SDK if not already loaded
+      if (!window.FB && window.loadFacebookSDK) {
+        window.loadFacebookSDK();
+        
+        // Set up a listener for when the SDK is ready
+        const checkSDKReady = () => {
+          if (window.FB && window.FB.XFBML) {
+            setIsFacebookSDKReady(true);
+            // Let Facebook auto-parse since we loaded with xfbml=1
+            hasInitializedFacebook.current = true;
+          } else {
+            setTimeout(checkSDKReady, 100);
+          }
+        };
+        
+        setTimeout(checkSDKReady, 500);
+      } else if (window.FB && window.FB.XFBML && !isFacebookSDKReady) {
+        // SDK is already loaded but we haven't marked it as ready yet
+        setIsFacebookSDKReady(true);
+        
+        // If this is the first time we're enabling Facebook on this page load,
+        // we need to manually parse since the SDK was already loaded
+        if (!hasInitializedFacebook.current) {
+          setTimeout(() => {
+            window.FB.XFBML.parse();
+            hasInitializedFacebook.current = true;
+          }, 500);
+        }
       }
-    };
-
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    
-    return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-    };
-  }, []);
-
-  // Sync Facebook state when isFacebookEnabled changes
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      syncFacebookState();
-    }, 100);
-    
-    return () => clearTimeout(timer);
-  }, [isFacebookEnabled]);
+    } else {
+      setIsFacebookSDKReady(false);
+      // Reset the initialization flag when Facebook is disabled
+      hasInitializedFacebook.current = false;
+    }
+  }, [isFacebookEnabled, isFacebookSDKReady]);
 
   const toggleShowcaseFacebook = () => {
     const newEnabledState = !isFacebookEnabled;
     setIsFacebookEnabled(newEnabledState);
+    localStorage.setItem('facebook-tracking-enabled', newEnabledState.toString());
     
-    const facebookContent = document.getElementById('facebook-content');
-    const toggleSection = document.getElementById('facebook-toggle-section');
-    const toggleSwitch = document.getElementById('showcase-facebook-toggle');
-    const toggleSlider = document.getElementById('showcase-facebook-toggle-slider');
-
-    if (facebookContent && toggleSection && toggleSwitch && toggleSlider) {
-      if (newEnabledState) {
-        // Enable Facebook features
-        facebookContent.classList.remove('hidden');
-        toggleSection.classList.add('hidden'); // Hide the toggle section
-        toggleSwitch.classList.add('bg-red-500');
-        toggleSwitch.classList.remove('bg-gray-600');
-        toggleSlider.classList.add('translate-x-6');
-        toggleSlider.classList.remove('translate-x-1');
-        localStorage.setItem('facebook-tracking-enabled', 'true');
-        
-        // Load Facebook SDK if not already loaded
-        if (window.loadFacebookSDK) {
-          window.loadFacebookSDK();
-        }
-        
-        // Parse Facebook plugins after a short delay
-        setTimeout(() => {
-          if (window.FB && window.FB.XFBML) {
-            window.FB.XFBML.parse();
-          }
-        }, 1000);
-        
-      } else {
-        // Disable Facebook features
-        facebookContent.classList.add('hidden');
-        toggleSection.classList.remove('hidden'); // Show the toggle section again
-        toggleSwitch.classList.remove('bg-red-500');
-        toggleSwitch.classList.add('bg-gray-600');
-        toggleSlider.classList.remove('translate-x-6');
-        toggleSlider.classList.add('translate-x-1');
-        localStorage.setItem('facebook-tracking-enabled', 'false');
-        
-        // Disable Facebook tracking and clear cookies
-        if (window.disableFacebookTracking) {
-          window.disableFacebookTracking();
-        }
+    // If disabling Facebook, clear tracking and cookies
+    if (!newEnabledState) {
+      if (window.disableFacebookTracking) {
+        window.disableFacebookTracking();
       }
     }
   };
@@ -376,7 +303,7 @@ function Showcase() {
             </div>
             
             {/* Facebook Toggle Section */}
-            <div id="facebook-toggle-section" className="text-center pt-8">
+            <div className={`text-center pt-8 ${isFacebookEnabled ? 'hidden' : ''}`}>
               <h4 className="text-xl font-semibold text-white mb-2">Enable Live Facebook Feed</h4>
               
               {/* Toggle Switch */}
@@ -384,13 +311,11 @@ function Showcase() {
                 <div className="flex items-center">
                   <span className="text-gray-400 mr-4 text-sm">Disabled</span>
                   <button 
-                    id="showcase-facebook-toggle"
-                    className="relative inline-flex h-6 w-11 items-center rounded-full bg-gray-600 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-gray-800"
+                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-gray-800 ${isFacebookEnabled ? 'bg-red-500' : 'bg-gray-600'}`}
                     onClick={() => toggleShowcaseFacebook()}
                   >
                     <span 
-                      id="showcase-facebook-toggle-slider"
-                      className="inline-block h-4 w-4 transform rounded-full bg-white transition duration-200 ease-in-out translate-x-1"
+                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition duration-200 ease-in-out ${isFacebookEnabled ? 'translate-x-6' : 'translate-x-1'}`}
                     ></span>
                   </button>
                   <span className="text-gray-400 ml-4 text-sm">Enabled</span>
@@ -404,8 +329,8 @@ function Showcase() {
               </p>
             </div>
             
-            {/* Facebook Content (Hidden by default) */}
-            <div id="facebook-content" className="hidden">
+            {/* Facebook Content */}
+            <div className={`${isFacebookEnabled ? '' : 'hidden'}`}>
               <div className="text-center pt-6">
                 <div className="flex justify-center">
                   {/* Desktop: Facebook Page Plugin */}
