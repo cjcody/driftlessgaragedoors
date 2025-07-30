@@ -325,7 +325,7 @@ function Showcase() {
               <p className="text-sm text-gray-500">
                 When enabled, this feature will display our latest Facebook posts on this page. Please note that loading this feed allows Facebook to collect certain data about your visit — such as your IP address, browser details, and pages you view.
                 <br /><br />
-                You can change this setting anytime. Learn more in our <a href="/privacy-policy#tracking" className="text-red-400 hover:text-red-300">Privacy Policy</a>.
+                You can change this setting anytime within the privacy policy page. Learn more in our <a href="/privacy-policy#tracking" className="text-red-400 hover:text-red-300">Privacy Policy</a>.
               </p>
             </div>
             
