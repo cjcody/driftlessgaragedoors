@@ -29,6 +29,7 @@ function Showcase() {
   // Facebook state management
   const [isFacebookEnabled, setIsFacebookEnabled] = useState(false);
   const [isFacebookSDKReady, setIsFacebookSDKReady] = useState(false);
+  const [isFacebookLoading, setIsFacebookLoading] = useState(false);
   const hasInitializedFacebook = useRef(false);
 
 
@@ -87,6 +88,15 @@ function Showcase() {
     const newEnabledState = !isFacebookEnabled;
     setIsFacebookEnabled(newEnabledState);
     localStorage.setItem('facebook-tracking-enabled', newEnabledState.toString());
+    
+    // Show loading spinner when enabling Facebook
+    if (newEnabledState) {
+      setIsFacebookLoading(true);
+      // Hide loading spinner after a reasonable time
+      setTimeout(() => {
+        setIsFacebookLoading(false);
+      }, 1000);
+    }
     
     // If disabling Facebook, clear tracking and cookies
     if (!newEnabledState) {
@@ -331,7 +341,8 @@ function Showcase() {
             
             {/* Facebook Content */}
             <div className={`${isFacebookEnabled ? '' : 'hidden'}`}>
-              <div className="text-center pt-6">
+              <div className="text-center pt-6 relative">
+                {/* Facebook elements - always present when enabled */}
                 <div className="flex justify-center">
                   {/* Desktop: Facebook Page Plugin */}
                   <div className="hidden md:block">
@@ -363,6 +374,39 @@ function Showcase() {
                     ></div>
                   </div>
                 </div>
+                
+                {/* Loading overlay - positioned absolutely over the Facebook content */}
+                {isFacebookLoading && (
+                  <>
+                    {/* Desktop loading overlay */}
+                    <div className="absolute inset-0 bg-gray-800 bg-opacity-100 flex flex-col items-center justify-center rounded-lg hidden md:flex" style={{zIndex: 10}}>
+                      <div className="flex items-center">
+                        <div 
+                          className="w-10 h-10 rounded-full mr-4 animate-spin"
+                          style={{
+                            border: '3px solid #4b5563',
+                            borderTop: '3px solid #dc2626'
+                          }}
+                        ></div>
+                        <span className="text-gray-400 text-sm">Loading Facebook feed...</span>
+                      </div>
+                    </div>
+                    
+                    {/* Mobile loading overlay - covers the entire section */}
+                    <div className="md:hidden fixed inset-0 bg-gray-800 bg-opacity-100 flex items-center justify-center" style={{zIndex: 50}}>
+                      <div className="flex items-center">
+                        <div 
+                          className="w-10 h-10 rounded-full mr-4 animate-spin"
+                          style={{
+                            border: '3px solid #4b5563',
+                            borderTop: '3px solid #dc2626'
+                          }}
+                        ></div>
+                        <span className="text-gray-400 text-sm">Loading Facebook feed...</span>
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
             
