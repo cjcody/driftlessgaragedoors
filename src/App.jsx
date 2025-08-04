@@ -51,12 +51,43 @@ const BackgroundPreloader = () => {
   return null;
 };
 
-// Scroll to top component
+// Scroll to top component with smooth animation
 function ScrollToTop() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // Track if we've already scrolled for this navigation
+    let hasScrolled = false;
+    let timeoutId = null;
+
+    const scrollToTop = () => {
+      // Only scroll if we haven't already and we're not at the top
+      if (!hasScrolled && window.scrollY > 0) {
+        hasScrolled = true;
+        
+        // Try smooth scrolling first
+        try {
+          window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+          });
+        } catch (error) {
+          // Fallback to instant scroll for older browsers
+          window.scrollTo(0, 0);
+        }
+      }
+    };
+
+    // Single attempt with a small delay to ensure component is mounted
+    timeoutId = setTimeout(scrollToTop, 100);
+
+    // Cleanup function
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
   }, [pathname]);
 
   return null;

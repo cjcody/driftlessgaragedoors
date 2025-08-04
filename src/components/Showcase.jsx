@@ -30,6 +30,7 @@ function Showcase() {
   const [isFacebookEnabled, setIsFacebookEnabled] = useState(false);
   const [isFacebookSDKReady, setIsFacebookSDKReady] = useState(false);
   const [isFacebookLoading, setIsFacebookLoading] = useState(false);
+  const [showFallback, setShowFallback] = useState(false);
   const hasInitializedFacebook = useRef(false);
 
 
@@ -40,10 +41,6 @@ function Showcase() {
     const facebookEnabled = localStorage.getItem('facebook-tracking-enabled') === 'true';
     setIsFacebookEnabled(facebookEnabled);
   }, []);
-
-
-
-
 
   // Handle Facebook SDK loading and initialization
   useEffect(() => {
@@ -77,8 +74,38 @@ function Showcase() {
           }, 500);
         }
       }
+
+      // Set up error listener for Facebook SDK errors
+      const handleFacebookError = (event) => {
+        if (event.error && event.error.message && 
+            (event.error.message.includes('Something Went Wrong') || 
+             event.error.message.includes('Please try refreshing') ||
+             event.error.message.includes('Found null hrp') ||
+             event.error.message.includes('response error: 1357032'))) {
+          setShowFallback(true);
+        }
+      };
+
+      // Listen for Facebook SDK errors
+      window.addEventListener('error', handleFacebookError);
+      
+      // Also listen for unhandled promise rejections from Facebook
+      const handleUnhandledRejection = (event) => {
+        if (event.reason && event.reason.message && 
+            event.reason.message.includes('Facebook')) {
+          setShowFallback(true);
+        }
+      };
+      
+      window.addEventListener('unhandledrejection', handleUnhandledRejection);
+
+      return () => {
+        window.removeEventListener('error', handleFacebookError);
+        window.removeEventListener('unhandledrejection', handleUnhandledRejection);
+      };
     } else {
       setIsFacebookSDKReady(false);
+      setShowFallback(false);
       // Reset the initialization flag when Facebook is disabled
       hasInitializedFacebook.current = false;
     }
@@ -343,7 +370,7 @@ function Showcase() {
             <div className={`${isFacebookEnabled ? '' : 'hidden'}`}>
               <div className="text-center pt-6 relative">
                 {/* Facebook elements - always present when enabled */}
-                <div className="flex justify-center">
+                <div id="fbPageWrapper" className="flex justify-center" style={{ display: showFallback ? 'none' : 'flex' }}>
                   {/* Desktop: Facebook Page Plugin */}
                   <div className="hidden md:block">
                     <div 
@@ -374,6 +401,23 @@ function Showcase() {
                     ></div>
                   </div>
                 </div>
+
+                {/* Fallback Content - Only show when SDK fails to load */}
+                {showFallback && isFacebookEnabled && (
+                  <div className="text-center py-8">
+                    <div className="bg-gray-700 rounded-lg p-6 max-w-md mx-auto">
+                      <div className="flex items-center justify-center mb-4">
+                        <svg className="w-8 h-8 text-blue-500 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                        <h4 className="text-white font-semibold text-lg">Facebook Feed Unavailable</h4>
+                      </div>
+                        <p className="text-gray-300 mb-4">
+                          Currently unavailable due to Facebook's integration system; clear your browser data, open in private browser, or visit our Facebook page directly to check out our latest updates!
+                        </p>
+                    </div>
+                  </div>
+                )}
                 
                 {/* Loading overlay - positioned absolutely over the Facebook content */}
                 {isFacebookLoading && (
