@@ -73,35 +73,83 @@ function Showcase() {
             hasInitializedFacebook.current = true;
           }, 500);
         }
+      } else if (window.FB && window.FB.XFBML && isFacebookSDKReady) {
+        // SDK is already loaded and ready - ensure we're initialized
+        if (!hasInitializedFacebook.current) {
+          setTimeout(() => {
+            window.FB.XFBML.parse();
+            hasInitializedFacebook.current = true;
+          }, 500);
+        }
       }
 
-      // Set up error listener for Facebook SDK errors
-      const handleFacebookError = (event) => {
-        if (event.error && event.error.message && 
-            (event.error.message.includes('Something Went Wrong') || 
-             event.error.message.includes('Please try refreshing') ||
-             event.error.message.includes('Found null hrp') ||
-             event.error.message.includes('response error: 1357032'))) {
-          setShowFallback(true);
+      // Check for Facebook SDK loading issues (spinning wheel stuck)
+      const checkFacebookLoadingState = () => {
+        if (isFacebookEnabled && !showFallback) {
+          const fbRoot = document.getElementById('fb-root');
+          
+          if (fbRoot) {
+            // Check for Facebook iframes - these are where the loading wheel likely is
+            const fbIframes = fbRoot.querySelectorAll('iframe');
+            const allIframes = document.querySelectorAll('iframe');
+            
+            // Check for any iframes anywhere that might be Facebook-related
+            const facebookIframes = Array.from(allIframes).filter(iframe => {
+              const src = iframe.src || '';
+              return src.includes('facebook.com') || src.includes('fbcdn.net') || src.includes('fb.com');
+            });
+            
+            // Check iframe dimensions to detect loading state
+            let iframeHeightIssue = false;
+            if (facebookIframes.length > 0) {
+              const iframeHeights = facebookIframes.map(iframe => {
+                const rect = iframe.getBoundingClientRect();
+                const height = rect.height;
+                const width = rect.width;
+                return { height, width, src: iframe.src };
+              });
+              
+              // Check if any iframe has a height less than expected (indicating stuck/partial loading)
+              // Desktop: first iframe should have height of 600, stuck feed has height of 331
+              // Mobile: second iframe should have height of 348, stuck feed has height of 191.98
+              const firstIframe = iframeHeights[0];
+              const secondIframe = iframeHeights[1];
+              
+              // Check for desktop pattern (first iframe with height > 0)
+              // Use hybrid approach: minimum viable height AND percentage of expected
+              const desktopPartialHeight = firstIframe && 
+                firstIframe.height > 0 && 
+                firstIframe.height < 400 && // Conservative minimum (any post should be taller)
+                firstIframe.height < (600 * 0.7); // 70% of expected (stuck is ~55% of working)
+              
+              // Check for mobile pattern (second iframe with height > 0)
+              // Use hybrid approach: minimum viable height AND percentage of expected
+              const mobilePartialHeight = secondIframe && 
+                secondIframe.height > 0 && 
+                secondIframe.height < 250 && // Conservative minimum
+                secondIframe.height < (348 * 0.7); // 70% of expected
+              
+              iframeHeightIssue = desktopPartialHeight || mobilePartialHeight;
+              
+              if (iframeHeightIssue) {
+                console.log('DEBUG: Iframe stuck loading detected (partial height issue)');
+                console.log('DEBUG: Desktop height:', firstIframe?.height, 'Mobile height:', secondIframe?.height);
+                setShowFallback(true);
+              }
+            }
+          }
         }
       };
 
-      // Listen for Facebook SDK errors
-      window.addEventListener('error', handleFacebookError);
-      
-      // Also listen for unhandled promise rejections from Facebook
-      const handleUnhandledRejection = (event) => {
-        if (event.reason && event.reason.message && 
-            event.reason.message.includes('Facebook')) {
-          setShowFallback(true);
+      // Set up a timeout to check for Facebook loading issues
+      const loadingCheckTimeout = setTimeout(() => {
+        if (isFacebookEnabled && !showFallback) {
+          checkFacebookLoadingState();
         }
-      };
-      
-      window.addEventListener('unhandledrejection', handleUnhandledRejection);
+      }, 3000); // Wait 3 seconds before checking
 
       return () => {
-        window.removeEventListener('error', handleFacebookError);
-        window.removeEventListener('unhandledrejection', handleUnhandledRejection);
+        clearTimeout(loadingCheckTimeout);
       };
     } else {
       setIsFacebookSDKReady(false);

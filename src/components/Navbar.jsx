@@ -20,8 +20,14 @@ function Navbar() {
     e.preventDefault();
     
     if (location.pathname === '/') {
-      // If on homepage, scroll to top
+      // If on homepage, scroll to top and reset garage animation
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      
+      // Reset garage door animation
+      setAnimateGarage(false);
+      setHideGarage(false);
+      setTimeout(() => setAnimateGarage(true), 300);
+      setTimeout(() => setHideGarage(true), 1300);
     } else {
       // If on other pages, navigate to home
       navigate('/');
@@ -31,9 +37,15 @@ function Navbar() {
   // Handle Home link click
   const handleHomeClick = (e) => {
     if (location.pathname === '/') {
-      // If already on home page, scroll to top
+      // If already on home page, scroll to top and reset garage animation
       e.preventDefault();
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      
+      // Reset garage door animation
+      setAnimateGarage(false);
+      setHideGarage(false);
+      setTimeout(() => setAnimateGarage(true), 300);
+      setTimeout(() => setHideGarage(true), 1300);
     }
     // If on other pages, let the Link component handle navigation normally
   };
