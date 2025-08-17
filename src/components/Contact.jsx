@@ -84,14 +84,8 @@ function Contact() {
     setSubmitStatus(null);
 
     try {
-      // Create a unique callback function name
-      const callbackName = 'jsonpCallback_' + Date.now();
+      const url = 'https://script.google.com/macros/s/AKfycbwAKmqGyao5tIcUo9bqEKaYGjENJE3Qjd45Kxa-nLwQMvhh0RZEnRCftvwp-nizQiZU/exec';
       
-      // Create the script element for JSONP
-      const script = document.createElement('script');
-      const url = new URL('https://script.google.com/macros/s/AKfycbwpDXbNAxJWY6LjCMaARIC6f0xWU3je6SiukAPRdz3E7_baDFXAyePEG4LD0eWMQr4s/exec');
-      
-      // Add the data as URL parameters (excluding honeypot fields)
       const cleanFormData = {
         fullName: formData.fullName,
         phoneNumber: formData.phoneNumber,
@@ -107,63 +101,36 @@ function Contact() {
         additionalInfo: formData.additionalInfo
       };
       
+      const formDataToSend = new FormData();
       Object.keys(cleanFormData).forEach(key => {
         if (cleanFormData[key]) {
-          url.searchParams.append(key, cleanFormData[key]);
+          formDataToSend.append(key, cleanFormData[key]);
         }
       });
       
-      // Add callback parameter
-      url.searchParams.append('callback', callbackName);
-      
-      // Create a promise to handle the JSONP response
-      const responsePromise = new Promise((resolve, reject) => {
-        // Create global callback function
-        window[callbackName] = (response) => {
-          resolve(response);
-          // Clean up
-          delete window[callbackName];
-          document.head.removeChild(script);
-        };
-        
-        // Set timeout for error handling
-        setTimeout(() => {
-          reject(new Error('Request timeout'));
-          delete window[callbackName];
-          if (document.head.contains(script)) {
-            document.head.removeChild(script);
-          }
-        }, 10000); // 10 second timeout
+      const response = await fetch(url, {
+        method: 'POST',
+        body: formDataToSend,
+        mode: 'no-cors'
       });
       
-      // Set the script source and add to page
-      script.src = url.toString();
-      document.head.appendChild(script);
-      
-      // Wait for response
-      const result = await responsePromise;
-      
-      if (result.status === 'success') {
-        setSubmitStatus('success');
-        setFormData({
-          fullName: '',
-          phoneNumber: '',
-          emailAddress: '',
-          serviceAddress: '',
-          doorWidth: '',
-          doorHeight: '',
-          doorColor: '',
-          insulationRating: '',
-          windows: '',
-          constructionType: '',
-          operator: '',
-          additionalInfo: '',
-          website: '',
-          company: ''
-        });
-      } else {
-        setSubmitStatus('error');
-      }
+      setSubmitStatus('success');
+      setFormData({
+        fullName: '',
+        phoneNumber: '',
+        emailAddress: '',
+        serviceAddress: '',
+        doorWidth: '',
+        doorHeight: '',
+        doorColor: '',
+        insulationRating: '',
+        windows: '',
+        constructionType: '',
+        operator: '',
+        additionalInfo: '',
+        website: '',
+        company: ''
+      });
     } catch (error) {
       console.error('Error submitting form:', error);
       setSubmitStatus('error');
