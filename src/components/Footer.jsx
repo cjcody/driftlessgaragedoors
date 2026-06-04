@@ -57,7 +57,7 @@ function Footer() {
         </div>
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
           <p>&copy; 2025 Driftless Garage Doors, LLC. All rights reserved.</p>
-          <p className="mt-2 text-sm">Website designed by <a href="https://www.codyjwebstudio.com/" target="_blank" rel="noopener noreferrer" className="text-red-500 hover:text-red-400 transition-colors duration-200">Cody J Web Studio</a></p>
+          <p className="mt-2 text-sm">Website designed by <a href="https://cjcody.github.io/codyjwebstudio/" target="_blank" rel="noopener noreferrer" className="text-red-500 hover:text-red-400 transition-colors duration-200">Cody J Web Studio</a></p>
           <p className="mt-2 text-sm">
             <a href="/privacy-policy" className="text-gray-400 hover:text-red-500 transition-colors duration-200">Privacy Policy</a>
           </p>
