@@ -6,14 +6,9 @@ function PrivacyPolicy() {
   const [facebookEnabled, setFacebookEnabled] = useState(false);
 
   useEffect(() => {
-    // Load user's saved preference
-    const savedPreference = localStorage.getItem('facebook-tracking-enabled');
-    if (savedPreference !== null) {
-      setFacebookEnabled(savedPreference === 'true');
-    }
-    
-    // Update UI to reflect current state
-    updateToggleUI();
+    // Never persist Facebook toggle — clear any legacy saved preference
+    localStorage.removeItem('facebook-tracking-enabled');
+    setFacebookEnabled(false);
   }, []);
 
   const updateToggleUI = () => {
@@ -41,12 +36,7 @@ function PrivacyPolicy() {
   const toggleFacebookTracking = () => {
     const newState = !facebookEnabled;
     setFacebookEnabled(newState);
-    
-    // Save preference
-    localStorage.setItem('facebook-tracking-enabled', newState.toString());
-    
-    // Update UI
-    updateToggleUI();
+    // Keep preference in memory only for this visit
     
     // Apply the setting
     if (newState) {
@@ -236,7 +226,7 @@ function PrivacyPolicy() {
         </ul>
         
         <h2 id="tracking" className="text-2xl font-bold mt-8 mb-2">Cookie & Tracking Preferences</h2>
-        <p className="mb-4">Facebook integration is disabled by default to protect your privacy. You can enable Facebook social features if you choose:</p>
+        <p className="mb-4">Facebook integration is disabled by default to protect your privacy. You can enable Facebook social features if you choose. This preference is for your current visit only and resets the next time you return to the site:</p>
         
         <div className="bg-gray-800 rounded-lg p-6 mb-6">
           <div className="flex items-center justify-between mb-4">

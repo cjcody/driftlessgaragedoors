@@ -35,11 +35,10 @@ function Showcase() {
 
 
 
-  // Check if Facebook was previously enabled and restore state
+  // Never persist the Facebook toggle — always start disabled so the SDK
+  // gets a clean opt-in init on every visit (avoids stale localStorage/session bugs)
   useEffect(() => {
-    // Initialize Facebook state from localStorage
-    const facebookEnabled = localStorage.getItem('facebook-tracking-enabled') === 'true';
-    setIsFacebookEnabled(facebookEnabled);
+    localStorage.removeItem('facebook-tracking-enabled');
   }, []);
 
   // Handle Facebook SDK loading and initialization
@@ -162,7 +161,7 @@ function Showcase() {
   const toggleShowcaseFacebook = () => {
     const newEnabledState = !isFacebookEnabled;
     setIsFacebookEnabled(newEnabledState);
-    localStorage.setItem('facebook-tracking-enabled', newEnabledState.toString());
+    // Keep toggle in memory only — do not persist across visits
     
     // Show loading spinner when enabling Facebook
     if (newEnabledState) {
