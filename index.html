@@ -138,21 +138,64 @@
     <!-- Facebook SDK will be loaded dynamically only when user explicitly enables it -->
     <div id="fb-root"></div>
     <script>
-      // Function to load Facebook SDK only when user explicitly enables it
+      window.__fbSdkPromise = null;
+
+      // Load Facebook SDK once; always resolves when FB.XFBML is ready.
+      // Callers must still FB.XFBML.parse(container) after mounting widgets.
       window.loadFacebookSDK = function() {
-        if (!window.FB) {
-          // Check if script is already being loaded
+        if (window.FB && window.FB.XFBML) {
+          return Promise.resolve(window.FB);
+        }
+
+        if (window.__fbSdkPromise) {
+          return window.__fbSdkPromise;
+        }
+
+        window.__fbSdkPromise = new Promise(function(resolve, reject) {
+          var previousInit = window.fbAsyncInit;
+          window.fbAsyncInit = function() {
+            try {
+              if (typeof previousInit === 'function') previousInit();
+              window.FB.init({
+                xfbml: false,
+                version: 'v19.0'
+              });
+              resolve(window.FB);
+            } catch (err) {
+              reject(err);
+            }
+          };
+
           if (document.querySelector('script[src*="connect.facebook.net"]')) {
+            var waited = 0;
+            var waitForFb = setInterval(function() {
+              waited += 50;
+              if (window.FB && window.FB.XFBML) {
+                clearInterval(waitForFb);
+                resolve(window.FB);
+              } else if (waited >= 10000) {
+                clearInterval(waitForFb);
+                window.__fbSdkPromise = null;
+                reject(new Error('Facebook SDK timed out'));
+              }
+            }, 50);
             return;
           }
-          
-          const script = document.createElement('script');
+
+          var script = document.createElement('script');
+          script.id = 'facebook-jssdk';
           script.async = true;
           script.defer = true;
           script.crossOrigin = 'anonymous';
-          script.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v19.0';
+          script.src = 'https://connect.facebook.net/en_US/sdk.js';
+          script.onerror = function() {
+            window.__fbSdkPromise = null;
+            reject(new Error('Facebook SDK failed to load'));
+          };
           document.head.appendChild(script);
-        }
+        });
+
+        return window.__fbSdkPromise;
       };
       
       // Function to disable Facebook tracking and clear cookies
@@ -172,6 +215,8 @@
         if (fbScript) {
           fbScript.remove();
         }
+
+        window.__fbSdkPromise = null;
         
         // Clear Facebook global object
         if (window.FB) {

@@ -6,14 +6,11 @@ function PrivacyPolicy() {
   const [facebookEnabled, setFacebookEnabled] = useState(false);
 
   useEffect(() => {
-    // Load user's saved preference
+    // Consent preference only — Showcase owns the actual SDK load/parse path
     const savedPreference = localStorage.getItem('facebook-tracking-enabled');
     if (savedPreference !== null) {
       setFacebookEnabled(savedPreference === 'true');
     }
-    
-    // Update UI to reflect current state
-    updateToggleUI();
   }, []);
 
   const updateToggleUI = () => {
@@ -41,43 +38,11 @@ function PrivacyPolicy() {
   const toggleFacebookTracking = () => {
     const newState = !facebookEnabled;
     setFacebookEnabled(newState);
-    
-    // Save preference
     localStorage.setItem('facebook-tracking-enabled', newState.toString());
-    
-    // Update UI
-    updateToggleUI();
-    
-    // Apply the setting
-    if (newState) {
-      enableFacebookTracking();
-    } else {
-      disableFacebookTracking();
-    }
-  };
 
-  const enableFacebookTracking = () => {
-    // Re-enable Facebook SDK if it was disabled
-    if (window.FB && window.FB.XFBML) {
-      window.FB.XFBML.parse();
-    }
-    
-    // Show Facebook content if it was hidden
-    const facebookSections = document.querySelectorAll('.facebook-section');
-    facebookSections.forEach(section => {
-      section.style.display = 'block';
-    });
-  };
-
-  const disableFacebookTracking = () => {
-    // Hide Facebook content
-    const facebookSections = document.querySelectorAll('.facebook-section');
-    facebookSections.forEach(section => {
-      section.style.display = 'none';
-    });
-    
-    // Disable Facebook tracking and clear cookies
-    if (window.disableFacebookTracking) {
+    // Turning off clears SDK state site-wide. Turning on only saves consent;
+    // /showcase loads and parses the feed with the same path as a manual toggle.
+    if (!newState && window.disableFacebookTracking) {
       window.disableFacebookTracking();
     }
   };
@@ -236,7 +201,7 @@ function PrivacyPolicy() {
         </ul>
         
         <h2 id="tracking" className="text-2xl font-bold mt-8 mb-2">Cookie & Tracking Preferences</h2>
-        <p className="mb-4">Facebook integration is disabled by default to protect your privacy. You can enable Facebook social features if you choose:</p>
+        <p className="mb-4">Facebook integration is disabled by default to protect your privacy. You can enable Facebook social features if you choose. Your preference is saved in your browser and remembered on return visits; Facebook’s scripts only load after you opt in (or when a saved opt-in is restored on the Showcase page):</p>
         
         <div className="bg-gray-800 rounded-lg p-6 mb-6">
           <div className="flex items-center justify-between mb-4">
