@@ -26,157 +26,124 @@ function Showcase() {
     return () => clearInterval(interval);
   }, [slideshowImages.length]);
 
-  // Facebook state management
-  const [isFacebookEnabled, setIsFacebookEnabled] = useState(false);
-  const [isFacebookSDKReady, setIsFacebookSDKReady] = useState(false);
-  const [isFacebookLoading, setIsFacebookLoading] = useState(false);
+  // Facebook: localStorage stores consent only. SDK load/parse always uses one path.
+  const FB_PREF_KEY = 'facebook-tracking-enabled';
+  const [isFacebookEnabled, setIsFacebookEnabled] = useState(
+    () => localStorage.getItem(FB_PREF_KEY) === 'true'
+  );
+  const [isFacebookLoading, setIsFacebookLoading] = useState(
+    () => localStorage.getItem(FB_PREF_KEY) === 'true'
+  );
   const [showFallback, setShowFallback] = useState(false);
-  const hasInitializedFacebook = useRef(false);
+  const [feedMountKey, setFeedMountKey] = useState(0);
+  const loadingHideTimeout = useRef(null);
 
-
-
-  // Never persist the Facebook toggle — always start disabled so the SDK
-  // gets a clean opt-in init on every visit (avoids stale localStorage/session bugs)
+  // Single load path for click-enable AND restored consent
   useEffect(() => {
-    localStorage.removeItem('facebook-tracking-enabled');
-  }, []);
+    if (!isFacebookEnabled) {
+      setShowFallback(false);
+      setIsFacebookLoading(false);
+      return undefined;
+    }
 
-  // Handle Facebook SDK loading and initialization
-  useEffect(() => {
-    if (isFacebookEnabled) {
-      // Load Facebook SDK if not already loaded
-      if (!window.FB && window.loadFacebookSDK) {
-        window.loadFacebookSDK();
-        
-        // Set up a listener for when the SDK is ready
-        const checkSDKReady = () => {
-          if (window.FB && window.FB.XFBML) {
-            setIsFacebookSDKReady(true);
-            // Let Facebook auto-parse since we loaded with xfbml=1
-            hasInitializedFacebook.current = true;
-          } else {
-            setTimeout(checkSDKReady, 100);
-          }
-        };
-        
-        setTimeout(checkSDKReady, 500);
-      } else if (window.FB && window.FB.XFBML && !isFacebookSDKReady) {
-        // SDK is already loaded but we haven't marked it as ready yet
-        setIsFacebookSDKReady(true);
-        
-        // If this is the first time we're enabling Facebook on this page load,
-        // we need to manually parse since the SDK was already loaded
-        if (!hasInitializedFacebook.current) {
-          setTimeout(() => {
-            window.FB.XFBML.parse();
-            hasInitializedFacebook.current = true;
-          }, 500);
+    let cancelled = false;
+
+    const checkFacebookLoadingState = () => {
+      const allIframes = document.querySelectorAll('iframe');
+      const facebookIframes = Array.from(allIframes).filter((iframe) => {
+        const src = iframe.src || '';
+        return src.includes('facebook.com') || src.includes('fbcdn.net') || src.includes('fb.com');
+      });
+
+      if (facebookIframes.length === 0) return;
+
+      const iframeHeights = facebookIframes.map((iframe) => {
+        const rect = iframe.getBoundingClientRect();
+        return { height: rect.height, width: rect.width };
+      });
+
+      const firstIframe = iframeHeights[0];
+      const secondIframe = iframeHeights[1];
+
+      const desktopPartialHeight =
+        firstIframe &&
+        firstIframe.height > 0 &&
+        firstIframe.height < 400 &&
+        firstIframe.height < 600 * 0.7;
+
+      const mobilePartialHeight =
+        secondIframe &&
+        secondIframe.height > 0 &&
+        secondIframe.height < 250 &&
+        secondIframe.height < 348 * 0.7;
+
+      if (desktopPartialHeight || mobilePartialHeight) {
+        setShowFallback(true);
+      }
+    };
+
+    const startFeed = async () => {
+      setShowFallback(false);
+      setIsFacebookLoading(true);
+
+      try {
+        if (!window.loadFacebookSDK) {
+          throw new Error('Facebook loader missing');
         }
-      } else if (window.FB && window.FB.XFBML && isFacebookSDKReady) {
-        // SDK is already loaded and ready - ensure we're initialized
-        if (!hasInitializedFacebook.current) {
-          setTimeout(() => {
-            window.FB.XFBML.parse();
-            hasInitializedFacebook.current = true;
-          }, 500);
+
+        await window.loadFacebookSDK();
+        if (cancelled) return;
+
+        // Wait one frame so freshly mounted .fb-page nodes are in the DOM
+        await new Promise((resolve) => requestAnimationFrame(() => resolve()));
+        if (cancelled) return;
+
+        const container = document.getElementById('fbPageWrapper');
+        if (window.FB?.XFBML && container) {
+          window.FB.XFBML.parse(container);
+        } else if (window.FB?.XFBML) {
+          window.FB.XFBML.parse();
+        }
+      } catch {
+        if (!cancelled) setShowFallback(true);
+      } finally {
+        if (!cancelled) {
+          if (loadingHideTimeout.current) clearTimeout(loadingHideTimeout.current);
+          loadingHideTimeout.current = setTimeout(() => {
+            if (!cancelled) setIsFacebookLoading(false);
+          }, 1000);
         }
       }
+    };
 
-      // Check for Facebook SDK loading issues (spinning wheel stuck)
-      const checkFacebookLoadingState = () => {
-        if (isFacebookEnabled && !showFallback) {
-          const fbRoot = document.getElementById('fb-root');
-          
-          if (fbRoot) {
-            // Check for Facebook iframes - these are where the loading wheel likely is
-            const fbIframes = fbRoot.querySelectorAll('iframe');
-            const allIframes = document.querySelectorAll('iframe');
-            
-            // Check for any iframes anywhere that might be Facebook-related
-            const facebookIframes = Array.from(allIframes).filter(iframe => {
-              const src = iframe.src || '';
-              return src.includes('facebook.com') || src.includes('fbcdn.net') || src.includes('fb.com');
-            });
-            
-            // Check iframe dimensions to detect loading state
-            let iframeHeightIssue = false;
-            if (facebookIframes.length > 0) {
-              const iframeHeights = facebookIframes.map(iframe => {
-                const rect = iframe.getBoundingClientRect();
-                const height = rect.height;
-                const width = rect.width;
-                return { height, width, src: iframe.src };
-              });
-              
-              // Check if any iframe has a height less than expected (indicating stuck/partial loading)
-              // Desktop: first iframe should have height of 600, stuck feed has height of 331
-              // Mobile: second iframe should have height of 348, stuck feed has height of 191.98
-              const firstIframe = iframeHeights[0];
-              const secondIframe = iframeHeights[1];
-              
-              // Check for desktop pattern (first iframe with height > 0)
-              // Use hybrid approach: minimum viable height AND percentage of expected
-              const desktopPartialHeight = firstIframe && 
-                firstIframe.height > 0 && 
-                firstIframe.height < 400 && // Conservative minimum (any post should be taller)
-                firstIframe.height < (600 * 0.7); // 70% of expected (stuck is ~55% of working)
-              
-              // Check for mobile pattern (second iframe with height > 0)
-              // Use hybrid approach: minimum viable height AND percentage of expected
-              const mobilePartialHeight = secondIframe && 
-                secondIframe.height > 0 && 
-                secondIframe.height < 250 && // Conservative minimum
-                secondIframe.height < (348 * 0.7); // 70% of expected
-              
-              iframeHeightIssue = desktopPartialHeight || mobilePartialHeight;
-              
-              if (iframeHeightIssue) {
-                console.log('DEBUG: Iframe stuck loading detected (partial height issue)');
-                console.log('DEBUG: Desktop height:', firstIframe?.height, 'Mobile height:', secondIframe?.height);
-                setShowFallback(true);
-              }
-            }
-          }
-        }
-      };
+    // Defer so React can commit conditional fb-page markup first
+    const startTimeout = setTimeout(startFeed, 0);
+    const loadingCheckTimeout = setTimeout(() => {
+      if (!cancelled) checkFacebookLoadingState();
+    }, 3000);
 
-      // Set up a timeout to check for Facebook loading issues
-      const loadingCheckTimeout = setTimeout(() => {
-        if (isFacebookEnabled && !showFallback) {
-          checkFacebookLoadingState();
-        }
-      }, 3000); // Wait 3 seconds before checking
-
-      return () => {
-        clearTimeout(loadingCheckTimeout);
-      };
-    } else {
-      setIsFacebookSDKReady(false);
-      setShowFallback(false);
-      // Reset the initialization flag when Facebook is disabled
-      hasInitializedFacebook.current = false;
-    }
-  }, [isFacebookEnabled, isFacebookSDKReady]);
+    return () => {
+      cancelled = true;
+      clearTimeout(startTimeout);
+      clearTimeout(loadingCheckTimeout);
+      if (loadingHideTimeout.current) clearTimeout(loadingHideTimeout.current);
+    };
+  }, [isFacebookEnabled, feedMountKey]);
 
   const toggleShowcaseFacebook = () => {
     const newEnabledState = !isFacebookEnabled;
     setIsFacebookEnabled(newEnabledState);
-    // Keep toggle in memory only — do not persist across visits
-    
-    // Show loading spinner when enabling Facebook
+    localStorage.setItem(FB_PREF_KEY, newEnabledState.toString());
+
     if (newEnabledState) {
+      // Remount widgets so parse always runs on fresh markup (same as first enable)
+      setFeedMountKey((key) => key + 1);
       setIsFacebookLoading(true);
-      // Hide loading spinner after a reasonable time
-      setTimeout(() => {
-        setIsFacebookLoading(false);
-      }, 1000);
+      return;
     }
-    
-    // If disabling Facebook, clear tracking and cookies
-    if (!newEnabledState) {
-      if (window.disableFacebookTracking) {
-        window.disableFacebookTracking();
-      }
+
+    if (window.disableFacebookTracking) {
+      window.disableFacebookTracking();
     }
   };
 
@@ -413,15 +380,19 @@ function Showcase() {
               </p>
             </div>
             
-            {/* Facebook Content */}
-            <div className={`${isFacebookEnabled ? '' : 'hidden'}`}>
+            {/* Facebook Content — mount widgets only when enabled so parse always hits fresh nodes */}
+            {isFacebookEnabled && (
               <div className="text-center pt-6 relative">
-                {/* Facebook elements - always present when enabled */}
-                <div id="fbPageWrapper" className="flex justify-center" style={{ display: showFallback ? 'none' : 'flex' }}>
+                <div
+                  id="fbPageWrapper"
+                  key={feedMountKey}
+                  className="flex justify-center"
+                  style={{ display: showFallback ? 'none' : 'flex' }}
+                >
                   {/* Desktop: Facebook Page Plugin */}
                   <div className="hidden md:block">
-                    <div 
-                      className="fb-page" 
+                    <div
+                      className="fb-page"
                       data-href="https://www.facebook.com/DriftlessGarageDoors"
                       data-tabs="timeline"
                       data-width="500"
@@ -432,11 +403,19 @@ function Showcase() {
                       data-show-facepile="true"
                     ></div>
                   </div>
-                  
+
                   {/* Mobile: Facebook Page Plugin scaled down */}
-                  <div className="md:hidden facebook-mobile-container flex justify-center" style={{transform: 'scale(0.58)', transformOrigin: 'center top', marginBottom: '-15.75rem', width: '100%'}}>
-                    <div 
-                      className="fb-page" 
+                  <div
+                    className="md:hidden facebook-mobile-container flex justify-center"
+                    style={{
+                      transform: 'scale(0.58)',
+                      transformOrigin: 'center top',
+                      marginBottom: '-15.75rem',
+                      width: '100%',
+                    }}
+                  >
+                    <div
+                      className="fb-page"
                       data-href="https://www.facebook.com/DriftlessGarageDoors"
                       data-tabs="timeline"
                       data-width="500"
@@ -450,7 +429,7 @@ function Showcase() {
                 </div>
 
                 {/* Fallback Content - Only show when SDK fails to load */}
-                {showFallback && isFacebookEnabled && (
+                {showFallback && (
                   <div className="text-center py-8">
                     <div className="bg-gray-700 rounded-lg p-6 max-w-md mx-auto">
                       <div className="flex items-center justify-center mb-4">
@@ -499,7 +478,7 @@ function Showcase() {
                   </>
                 )}
               </div>
-            </div>
+            )}
             
             {/* Call to Action */}
             <div className="text-center mt-6">
